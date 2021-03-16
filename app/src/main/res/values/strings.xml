@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BookStory</string>
+    <string name="welcome_message">Start your reading journey</string>
+    <string name="login">Login</string>
+</resources>
