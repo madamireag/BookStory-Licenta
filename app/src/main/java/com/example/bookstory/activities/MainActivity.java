@@ -1,8 +1,10 @@
-package com.example.bookstory;
+package com.example.bookstory.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.bookstory.R;
 
 public class MainActivity extends AppCompatActivity {
 

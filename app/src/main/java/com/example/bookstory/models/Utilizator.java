@@ -1,4 +1,4 @@
-package com.example.bookstory;
+package com.example.bookstory.models;
 
 public class Utilizator {
     private int id;
