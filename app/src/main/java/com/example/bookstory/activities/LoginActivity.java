@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         LibraryDB db = LibraryDB.getInstanta(getApplicationContext());
         List<CarteCuAutor> carteCuAutors = db.getCarteDao().getCarteCuAutori();
-        Log.i("TESTCARTE",carteCuAutors.get(0).toString());
+
+        Log.i("TESTCARTE",carteCuAutors.get(0).carte.toString());
+        Log.i("TESTAUTORICARTE",carteCuAutors.get(0).autori.get(0).toString());
     }
 }

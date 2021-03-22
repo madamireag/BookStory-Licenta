@@ -10,6 +10,7 @@ import com.example.bookstory.models.Carte;
 public interface CarteDao {
     @Insert
     long insert(Carte c);
+
     @Query("delete from carti")
     void deleteAll();
 }

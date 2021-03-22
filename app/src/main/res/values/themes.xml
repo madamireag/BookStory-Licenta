@@ -20,4 +20,21 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
+    <style name="TextViewShowAdaptorStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">260dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSelectHandleLeft">@id/none</item>
+        <item name="android:textSelectHandleRight">@id/none</item>
+        <item name="android:textSelectHandle">@id/none</item>
+        <item name="android:textEditPasteWindowLayout">@id/none</item>
+        <item name="android:textEditNoPasteWindowLayout">@id/none</item>
+        <item name="android:textEditSidePasteWindowLayout">@id/none</item>
+        <item name="android:textEditSideNoPasteWindowLayout">@id/none</item>
+        <item name="android:textCursorDrawable">@id/none</item>
+        <item name="android:textEditSuggestionItemLayout">@id/none</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

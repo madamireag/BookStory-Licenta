@@ -36,4 +36,12 @@ public class Autor {
     public void setNume(String nume) {
         this.nume = nume;
     }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "idAutor=" + idAutor +
+                ", nume='" + nume + '\'' +
+                '}';
+    }
 }

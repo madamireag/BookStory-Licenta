@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AddAuthorActivity">
+
+    <TextView
+        android:id="@+id/tvAddAutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/adauga_un_autor_nou" />
+
+    <EditText
+        android:id="@+id/etNumeAutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/nume_autor"
+        />
+
+    <Button
+        android:id="@+id/btnAddAutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/adauga_autorul" />
+</LinearLayout>

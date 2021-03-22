@@ -2,4 +2,26 @@
     <string name="app_name">BookStory</string>
     <string name="welcome_message">Start your reading journey</string>
     <string name="login">Login</string>
+    <string name="adauga_un_autor_nou">Adauga un autor nou</string>
+    <string name="nume_autor">Nume autor</string>
+    <string name="adauga_autorul">Adauga autorul</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="titlu">Titlu</string>
+    <string name="introdu_titlul">Introdu titlul</string>
+    <string name="isbn">ISBN</string>
+    <string name="introdu_isbn">Introdu ISBN</string>
+    <string name="numar_copii_disponibile">Numar copii disponibile</string>
+    <string name="introdu_nr_de_copii_disponibile">Introdu nr de copii disponibile</string>
+    <string name="gen_carte">Gen carte</string>
+    <string name="add_image">Add Image</string>
+    <string name="salvare">Salvare</string>
+    <string-array name="add_book_genre">
+        <item>FICTION</item>
+        <item>ROMANCE</item>
+        <item>CLASSIC</item>
+        <item>FANTASY</item>
+        <item>BIOGRAPHY</item>
+        <item>SCIENCE</item>
+    </string-array>
 </resources>

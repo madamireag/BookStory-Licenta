@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "carti")
-public class Carte {
+public class Carte implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int idCarte;
     private String titlu;
@@ -77,5 +79,17 @@ public class Carte {
 
     public void setCopertaURI(String copertaURI) {
         this.copertaURI = copertaURI;
+    }
+
+    @Override
+    public String toString() {
+        return "Carte{" +
+                "idCarte=" + idCarte +
+                ", titlu='" + titlu + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                ", genCarte=" + genCarte +
+                ", nrCopiiDisponibile=" + nrCopiiDisponibile +
+                ", copertaURI='" + copertaURI + '\'' +
+                '}';
     }
 }

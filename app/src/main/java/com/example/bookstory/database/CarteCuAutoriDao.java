@@ -19,4 +19,7 @@ public interface CarteCuAutoriDao {
     @Transaction
     @Query("SELECT * FROM carti")
     List<CarteCuAutor> getCarteCuAutori();
+
+    @Query("DELETE from AutorCarte")
+    void deleteAllFromJoinTable();
 }
