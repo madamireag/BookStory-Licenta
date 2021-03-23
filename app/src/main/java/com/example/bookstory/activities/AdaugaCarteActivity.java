@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.bookstory.R;
+import com.example.bookstory.database.LibraryDB;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.Gen;
 
@@ -32,11 +33,13 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     public Uri bookCoverUri = Uri.EMPTY;
     public static final String ADD_BOOK = "addBook";
     public static final int GALLERY_REQUEST_CODE = 105;
+    private LibraryDB dbInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adauga_carte);
         initializeazaCampuri();
+        dbInstance = LibraryDB.getInstanta(getApplicationContext());
         intent = getIntent();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.add_book_genre, R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -59,6 +62,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
              }else{
                  Carte carte = new Carte(etTitlu.getText().toString(),etISBN.getText().toString(),
                          Gen.valueOf(spinner.getSelectedItem().toString()),Integer.parseInt(etNrCopii.getText().toString()),bookCoverUri.toString());
+                 //carte.setId((int) dbInstance.getCartiDao().insert(carte));
                  intent.putExtra(ADD_BOOK, carte);
                  setResult(RESULT_OK, intent);
                  finish();

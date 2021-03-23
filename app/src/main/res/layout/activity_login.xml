@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/login"
     tools:context=".activities.LoginActivity">
 
     <EditText
@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        style="@style/EditTextStyle"
         android:layout_centerHorizontal="true"
         android:hint="@string/email"
         android:layout_centerVertical="true"
@@ -22,8 +24,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        style="@style/EditTextStyle"
         android:hint="@string/password"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
         android:layout_below="@+id/etEmail"
         android:layout_centerHorizontal="true"
         android:inputType="textPassword" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:text="@string/remember_me" />
+    <CheckBox
+        android:id="@+id/cbAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignParentEnd="true"
+        android:text="@string/login_as_admin" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corners"
+        android:layout_below="@+id/checkBox"
+        android:drawableEnd="@drawable/ic_baseline_login_24"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login" />
+
 </RelativeLayout>
