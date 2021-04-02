@@ -12,12 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawableStart="@drawable/ic_baseline_email_24"
         style="@style/EditTextStyle"
         android:layout_centerHorizontal="true"
         android:hint="@string/email"
         android:layout_centerVertical="true"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        />
 
     <EditText
         android:id="@+id/etPassword"
@@ -44,14 +45,28 @@
         android:layout_below="@+id/etPassword"
         android:layout_alignParentEnd="true"
         android:text="@string/login_as_admin" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_rounded_corners"
         android:layout_below="@+id/checkBox"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/button_rounded_corners"
         android:drawableEnd="@drawable/ic_baseline_login_24"
-        android:layout_centerHorizontal="true"
         android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cbAdmin"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/button"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/register" />
 
 </RelativeLayout>

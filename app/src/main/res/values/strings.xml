@@ -12,12 +12,22 @@
     <string name="isbn">ISBN</string>
     <string name="introdu_isbn">Introdu ISBN</string>
     <string name="numar_copii_disponibile">Numar copii disponibile</string>
-    <string name="introdu_nr_de_copii_disponibile">Introdu nr de copii disponibile</string>
+    <string name="introdu_nr_de_copii_disponibile">Introdu nr de copii</string>
     <string name="gen_carte">Gen carte</string>
     <string name="add_image">Add Image</string>
-    <string name="salvare">Salvare</string>
+    <string name="salvare">Salveaza cartea</string>
     <string name="remember_me">Remember me</string>
     <string name="login_as_admin">Login as admin</string>
+    <string name="register">Register</string>
+    <string name="adauga_o_carte">Adauga o carte</string>
+    <string name="adauga_autor">Adauga autor</string>
+    <string name="adauga_carte">Adauga Carte</string>
+    <string name="sterge_autori">Sterge autori</string>
+    <string name="sterge_carti">Sterge carti</string>
+    <string name="nume_complet">Nume complet</string>
+    <string name="adresa">Adresa</string>
+    <string name="nr_telefon">Nr telefon</string>
+    <string name="register_to_bookstory">Register to BookStory</string>
     <string-array name="add_book_genre">
         <item>FICTION</item>
         <item>ROMANCE</item>

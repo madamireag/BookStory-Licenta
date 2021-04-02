@@ -1,32 +1,26 @@
 package com.example.bookstory.models;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 //@Entity(tableName = "utilizatori")
 public class Utilizator {
     //@PrimaryKey(autoGenerate = true)
     private int idUtilizator;
-    private String nume;
-    private String prenume;
+    private String numeComplet;
     private String email;
     private String password;
     private String adresa;
     private String nrTelefon;
 
-    public Utilizator(int idUtilizator, String nume, String prenume, String email, String password, String adresa, String nrTelefon) {
+    public Utilizator(int idUtilizator, String numeComplet, String email, String password, String adresa, String nrTelefon) {
         this.idUtilizator = idUtilizator;
-        this.nume = nume;
-        this.prenume = prenume;
+        this.numeComplet = numeComplet;
         this.email = email;
         this.password = password;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
     //@Ignore
-    public Utilizator(String nume, String prenume, String adresa, String nrTelefon) {
-        this.nume = nume;
-        this.prenume = prenume;
+    public Utilizator(String numeComplet, String adresa, String nrTelefon) {
+        this.numeComplet = numeComplet;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
@@ -39,20 +33,12 @@ public class Utilizator {
         this.idUtilizator = idUtilizator;
     }
 
-    public String getNume() {
-        return nume;
+    public String getNumeComplet() {
+        return numeComplet;
     }
 
-    public void setNume(String nume) {
-        this.nume = nume;
-    }
-
-    public String getPrenume() {
-        return prenume;
-    }
-
-    public void setPrenume(String prenume) {
-        this.prenume = prenume;
+    public void setNumeComplet(String numeComplet) {
+        this.numeComplet = numeComplet;
     }
 
     public String getEmail() {

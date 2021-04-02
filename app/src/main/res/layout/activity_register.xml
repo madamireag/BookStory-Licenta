@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login"
+    tools:context=".activities.RegisterActivity">
+
+    <TextView
+        android:id="@+id/tvReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/TextviewTitle"
+        android:text="@string/register_to_bookstory" />
+
+
+    <EditText
+        android:id="@+id/etNume"
+        style="@style/EditTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:hint="@string/nume_complet"
+        android:inputType="textEmailAddress" />
+    <EditText
+        android:id="@+id/etAdresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        style="@style/EditTextStyle"
+        android:hint="@string/adresa"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:id="@+id/etTelefon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        style="@style/EditTextStyle"
+        android:hint="@string/nr_telefon"
+        android:inputType="number"
+        />
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        style="@style/EditTextStyle"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="10dp"
+        style="@style/EditTextStyle"
+        android:hint="@string/password"
+        android:layout_gravity="center"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/register"/>
+
+
+</LinearLayout>

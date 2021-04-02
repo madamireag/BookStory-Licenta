@@ -29,7 +29,7 @@ public class ListareCartiActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 200;
     LibraryDB db;
     List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
-    List<Carte> carti=new ArrayList<>();
+    List<Carte> carti = new ArrayList<>();
     FloatingActionButton floatingActionButton;
 
     @Override

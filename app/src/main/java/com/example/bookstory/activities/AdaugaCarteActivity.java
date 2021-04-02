@@ -18,8 +18,11 @@ import android.widget.Spinner;
 
 import com.example.bookstory.R;
 import com.example.bookstory.database.LibraryDB;
+import com.example.bookstory.models.Autor;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.Gen;
+
+import java.util.List;
 
 public class AdaugaCarteActivity extends AppCompatActivity {
     EditText etTitlu;
@@ -30,6 +33,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     Button btnSalvare;
     Intent intent;
     ImageView imageView;
+    Spinner spinnerAutor;
     public Uri bookCoverUri = Uri.EMPTY;
     public static final String ADD_BOOK = "addBook";
     public static final int GALLERY_REQUEST_CODE = 105;
@@ -43,6 +47,9 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         intent = getIntent();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.add_book_genre, R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        List<Autor> autorList = dbInstance.getAutorDao().getAll();
+        ArrayAdapter<Autor> adapter1= new ArrayAdapter<Autor>(this, android.R.layout.simple_spinner_dropdown_item,autorList);
+        spinnerAutor.setAdapter(adapter1);
         btnAddImagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +69,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
              }else{
                  Carte carte = new Carte(etTitlu.getText().toString(),etISBN.getText().toString(),
                          Gen.valueOf(spinner.getSelectedItem().toString()),Integer.parseInt(etNrCopii.getText().toString()),bookCoverUri.toString());
-                 //carte.setId((int) dbInstance.getCartiDao().insert(carte));
+                 carte.setId((int) dbInstance.getCartiDao().insert(carte));
                  intent.putExtra(ADD_BOOK, carte);
                  setResult(RESULT_OK, intent);
                  finish();
@@ -80,6 +87,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         btnAddImagine = findViewById(R.id.btnAddCoperta);
         btnSalvare = findViewById(R.id.btnSalvare);
         imageView = findViewById(R.id.bookCover);
+        spinnerAutor = findViewById(R.id.spinnerAutor);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

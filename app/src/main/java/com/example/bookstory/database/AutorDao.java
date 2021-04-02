@@ -7,11 +7,15 @@ import androidx.room.Query;
 
 import com.example.bookstory.models.Autor;
 
+import java.util.List;
+
 @Dao
 public interface AutorDao {
     @Insert
     long insert(Autor autor);
     @Query("delete from autori")
     void deleteAll();
+    @Query("select * from autori")
+    List<Autor> getAll();
 
 }

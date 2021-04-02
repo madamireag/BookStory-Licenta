@@ -6,7 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="start_color">#d299c2</color>
-    <color name="stop_color">#eef1f5</color>
+    <color name="start_color">#fbc2eb</color>
+    <color name="stop_color">#a6c1ee</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
