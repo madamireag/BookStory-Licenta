@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614104277283",
+    "project_id": "bookstory-app-f52d4",
+    "storage_bucket": "bookstory-app-f52d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614104277283:android:df2bb690880e4286f32c96",
+        "android_client_info": {
+          "package_name": "com.example.bookstory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614104277283-hsijprn51kl3ragule8kn95k4cbv07b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkjrJScdme6yQ0GPIfAXWl1zIaKdtFnx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614104277283-hsijprn51kl3ragule8kn95k4cbv07b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
