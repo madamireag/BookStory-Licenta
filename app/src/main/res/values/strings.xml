@@ -33,6 +33,8 @@
     <string name="invalid_password">Password should be at least 6 characters long!</string>
     <string name="reg_failed">Registration failed! Please try again later</string>
     <string name="reg_successfull">Registration successful!</string>
+    <string name="login_successfull">Login successfull!</string>
+    <string name="login_failed">Login failed!</string>
     <string-array name="add_book_genre">
         <item>FICTION</item>
         <item>ROMANCE</item>

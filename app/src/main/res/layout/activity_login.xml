@@ -4,53 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login"
+    android:id="@+id/layoutLogin"
     tools:context=".activities.LoginActivity">
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etEmailLogin"
+        style="@style/EditTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_centerInParent="true"
         android:drawableStart="@drawable/ic_baseline_email_24"
-        style="@style/EditTextStyle"
-        android:layout_centerHorizontal="true"
+        android:ems="10"
         android:hint="@string/email"
-        android:layout_centerVertical="true"
-        android:inputType="textEmailAddress"
-        />
+        android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPasswordLogin"
+        style="@style/EditTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        style="@style/EditTextStyle"
-        android:hint="@string/password"
-        android:drawableStart="@drawable/ic_baseline_lock_24"
-        android:layout_below="@+id/etEmail"
+        android:layout_below="@+id/etEmailLogin"
         android:layout_centerHorizontal="true"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPassword"
+        android:layout_below="@+id/etPasswordLogin"
         android:text="@string/remember_me" />
+
     <CheckBox
         android:id="@+id/cbAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPassword"
+        android:layout_below="@+id/etPasswordLogin"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
         android:text="@string/login_as_admin" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBox"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_rounded_corners"
         android:drawableEnd="@drawable/ic_baseline_login_24"
         android:text="@string/login" />
@@ -60,11 +61,9 @@
         android:layout_width="119dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cbAdmin"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/button"
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/btnLogin"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/register" />
 

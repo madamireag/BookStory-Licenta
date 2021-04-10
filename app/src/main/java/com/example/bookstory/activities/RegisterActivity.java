@@ -23,7 +23,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText etNume;
-    EditText etPrenume;
     EditText etEmail;
     EditText etPassword;
     Button btnRegister;
@@ -34,11 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        etNume = findViewById(R.id.etNume);
-        etEmail = findViewById(R.id.etEmail);
-        btnRegister = findViewById(R.id.btnRegisterDo);
-        etPassword = findViewById(R.id.etPassword);
-        progressBar=findViewById(R.id.progressBarRegister);
+        initializeUI();
         auth = FirebaseAuth.getInstance();
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
     private void registerNewUser() {
         progressBar.setVisibility(View.VISIBLE);
         String email = etEmail.getText().toString();
@@ -84,5 +80,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initializeUI(){
+        etNume = findViewById(R.id.etNume);
+        etEmail = findViewById(R.id.etEmail);
+        btnRegister = findViewById(R.id.btnRegisterDo);
+        etPassword = findViewById(R.id.etPassword);
+        progressBar=findViewById(R.id.progressBarRegister);
     }
 }
