@@ -22,7 +22,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etNume;
+    EditText etName;
     EditText etEmail;
     EditText etPassword;
     Button btnRegister;
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etNume.getText().toString()).build();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
                 authResult.getUser().updateProfile(profileUpdates);
             }
         });
@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initializeUI(){
-        etNume = findViewById(R.id.etNume);
+        etName = findViewById(R.id.etNume);
         etEmail = findViewById(R.id.etEmail);
         btnRegister = findViewById(R.id.btnRegisterDo);
         etPassword = findViewById(R.id.etPassword);

@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),UserProfileActivity.class);
+                    startActivity(intent);
                 } else {
                     Log.i("EROARE-LOGIN",task.getException().toString());
                     Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
