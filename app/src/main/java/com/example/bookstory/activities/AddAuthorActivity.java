@@ -21,13 +21,10 @@ public class AddAuthorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_author);
         etNumeAutor = findViewById(R.id.etNumeAutor);
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
-        btnAddAutor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Autor autor = new Autor(etNumeAutor.getText().toString());
-              //  autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
+        btnAddAutor.setOnClickListener(v -> {
+            Autor autor = new Autor(etNumeAutor.getText().toString());
+          //  autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
 
-            }
         });
     }
 }

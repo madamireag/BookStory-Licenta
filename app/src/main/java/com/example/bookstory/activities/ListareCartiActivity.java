@@ -43,12 +43,9 @@ public class ListareCartiActivity extends AppCompatActivity {
         for(CarteCuAutor c : carteCuAutorList){
            carti.add(c.carte);
         }
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AdaugaCarteActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
-            }
+        floatingActionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), AdaugaCarteActivity.class);
+            startActivityForResult(intent,REQUEST_CODE);
         });
 
         BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista,carti,getLayoutInflater()){
@@ -81,9 +78,6 @@ public class ListareCartiActivity extends AppCompatActivity {
                     @Override
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                         View view =  super.getView(position, convertView, parent);
-                        TextView tvAutor = view.findViewById(R.id.autor);
-                        StringBuilder stringBuilder = new StringBuilder();
-
                         return view;
                     }
                 };

@@ -8,12 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.bookstory.R;
-import com.example.bookstory.database.LibraryDB;
-import com.example.bookstory.models.Autor;
-import com.example.bookstory.models.AutorCarte;
-import com.example.bookstory.models.Carte;
-import com.example.bookstory.models.CarteCuAutor;
-import com.example.bookstory.models.Gen;
+
 
 public class MainActivity extends AppCompatActivity {
 

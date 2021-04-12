@@ -35,12 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initializeUI();
         auth = FirebaseAuth.getInstance();
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerNewUser();
-            }
-        });
+        btnRegister.setOnClickListener(v -> registerNewUser());
     }
 
     private void registerNewUser() {
@@ -72,12 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                 }
             }
-        }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
-                authResult.getUser().updateProfile(profileUpdates);
-            }
+        }).addOnSuccessListener(authResult -> {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
+            authResult.getUser().updateProfile(profileUpdates);
         });
 
     }
