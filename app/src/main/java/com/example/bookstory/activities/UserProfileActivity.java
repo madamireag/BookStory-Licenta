@@ -28,6 +28,8 @@ public class UserProfileActivity extends AppCompatActivity {
     Button btnChangeProfilePic;
     Button btnSaveChanges;
     EditText etDisplayName;
+    EditText etChangeEmail;
+    EditText etChangePassword;
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
     ImageView imageView;
@@ -43,6 +45,7 @@ public class UserProfileActivity extends AppCompatActivity {
             firebaseUser = auth.getCurrentUser();
             profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
             etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
+            etChangeEmail.setText(firebaseUser.getEmail());
             imageView.setImageURI(profilePic);
         }
 
@@ -55,7 +58,25 @@ public class UserProfileActivity extends AppCompatActivity {
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                     .setDisplayName(etDisplayName.getText().toString())
                     .build();
-            firebaseUser.updateProfile(profileChangeRequest);
+            if(!etChangeEmail.getText().toString().isEmpty()) {
+                firebaseUser.updateEmail(etChangeEmail.getText().toString()).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Email updated",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            if(!etChangePassword.getText().toString().isEmpty()) {
+                firebaseUser.updatePassword(etChangePassword.getText().toString()).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Password updated",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+                firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Profile picture updated",Toast.LENGTH_LONG).show();
+                    }
+                });
         });
     }
 
@@ -69,16 +90,13 @@ public class UserProfileActivity extends AppCompatActivity {
                     .setPhotoUri(profilePic)
                     .build();
             firebaseUser.updateProfile(profileChangeRequest)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),"Profile pic updated!",Toast.LENGTH_LONG).show();
-                        imageView.setImageURI(profilePic);
-                        Log.i("PROFILE-PIC-GALLERY",profilePic.toString());
-                }
-                }
-            });
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(),"Profile pic updated!",Toast.LENGTH_LONG).show();
+                            imageView.setImageURI(profilePic);
+                            Log.i("PROFILE-PIC-GALLERY",profilePic.toString());
+                    }
+                    });
         }
     }
 
@@ -86,6 +104,8 @@ public class UserProfileActivity extends AppCompatActivity {
         btnChangeProfilePic = findViewById(R.id.btnSchimbaPoza);
         imageView = findViewById(R.id.imageView2);
         etDisplayName = findViewById(R.id.etDisplayName);
+        etChangeEmail = findViewById(R.id.etChangeEmail);
+        etChangePassword = findViewById(R.id.etChangePassword);
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
     }
 }

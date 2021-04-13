@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.bookstory.R;
@@ -18,11 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+        btnLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
 //                Autor autor = new Autor("Mark Manson");
 //                Autor autor1 = new Autor("John Green");
 //                Autor autor2 = new Autor("alt autor");
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 //                db.getCarteDao().insert(autorCarte);
 //                db.getCarteDao().insert(autorCarte1);
 //                db.getCarteDao().insert(autorCarte2);
-            }
         });
     }
 }

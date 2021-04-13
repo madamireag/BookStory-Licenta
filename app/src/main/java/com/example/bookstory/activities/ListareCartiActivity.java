@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +76,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                     @NonNull
                     @Override
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        View view =  super.getView(position, convertView, parent);
-                        return view;
+                        return super.getView(position, convertView, parent);
                     }
                 };
                 listView.setAdapter(adapter);
