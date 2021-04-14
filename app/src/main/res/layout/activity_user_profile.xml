@@ -63,5 +63,12 @@
         android:layout_margin="10dp"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/salveaza_schimbari" />
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/delete_the_account" />
 </LinearLayout>
 </ScrollView>

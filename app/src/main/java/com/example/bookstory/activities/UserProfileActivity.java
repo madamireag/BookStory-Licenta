@@ -5,11 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +30,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE_PROFILE = 111;
     Button btnChangeProfilePic;
     Button btnSaveChanges;
+    Button btnDeleteAccount;
     EditText etDisplayName;
     EditText etChangeEmail;
     EditText etChangePassword;
@@ -72,11 +76,26 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
             }
-                firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
+            firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), "Profile picture updated",Toast.LENGTH_LONG).show();
                     }
                 });
+        });
+
+        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(UserProfileActivity.this)
+                        .setTitle("Confirmare stergere")
+                        .setMessage("Doriti sa stergeti contul?")
+                        .setPositiveButton("Da", (dialog, which) -> firebaseUser.delete().addOnCompleteListener(task -> {
+                            Toast.makeText(getApplicationContext(),"Cont sters!",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        })).setNegativeButton("Nu", (dialog, which) -> dialog.cancel()).create();
+                alertDialog.show();
+            }
         });
     }
 
@@ -100,12 +119,13 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeUI(){
+    private void initializeUI() {
         btnChangeProfilePic = findViewById(R.id.btnSchimbaPoza);
         imageView = findViewById(R.id.imageView2);
         etDisplayName = findViewById(R.id.etDisplayName);
         etChangeEmail = findViewById(R.id.etChangeEmail);
         etChangePassword = findViewById(R.id.etChangePassword);
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
+        btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
     }
 }

@@ -57,15 +57,14 @@ public class RegisterActivity extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+                if(task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), R.string.reg_successfull, Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.reg_failed, Toast.LENGTH_LONG).show();
                     Log.i("EROARE",task.getResult().toString());
-                    progressBar.setVisibility(View.GONE);
                 }
+                progressBar.setVisibility(View.GONE);
             }
         }).addOnSuccessListener(authResult -> {
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
