@@ -35,6 +35,8 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     public Uri bookCoverUri = Uri.EMPTY;
     public static final String ADD_BOOK = "addBook";
     public static final int GALLERY_REQUEST_CODE = 105;
+    public static boolean isUpdate = false;
+    private long editBookId;
     private LibraryDB dbInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         List<Autor> autorList = dbInstance.getAutorDao().getAll();
         ArrayAdapter<Autor> adapter1= new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, autorList);
         spinnerAutor.setAdapter(adapter1);
+
+        if(intent.hasExtra(ListareCartiActivity.EDIT_BOOK)) {
+            populeazaCampuri();
+        }
         btnAddImagine.setOnClickListener(v -> {
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(gallery, GALLERY_REQUEST_CODE);
@@ -62,7 +68,13 @@ public class AdaugaCarteActivity extends AppCompatActivity {
          }else{
              Carte carte = new Carte(etTitlu.getText().toString(),etISBN.getText().toString(),
                      Gen.valueOf(spinner.getSelectedItem().toString()),Integer.parseInt(etNrCopii.getText().toString()),bookCoverUri.toString());
-             carte.setId((int) dbInstance.getCartiDao().insert(carte));
+             if(isUpdate) {
+                 carte.setId((int) editBookId);
+                 dbInstance.getCartiDao().update(carte);
+             } else {
+                 carte.setId((int) dbInstance.getCartiDao().insert(carte));
+             }
+
              intent.putExtra(ADD_BOOK, carte);
              setResult(RESULT_OK, intent);
              finish();
@@ -81,7 +93,21 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         imageView = findViewById(R.id.bookCover);
         spinnerAutor = findViewById(R.id.spinnerAutor);
     }
+    private void populeazaCampuri() {
+       Carte carte = (Carte)intent.getSerializableExtra(ListareCartiActivity.EDIT_BOOK);
+       editBookId = carte.getIdCarte();
+       etISBN.setText(carte.getISBN());
+       etTitlu.setText(carte.getTitlu());
+       etNrCopii.setText(String.valueOf(carte.getNrCopiiDisponibile()));
+       ArrayAdapter<String> adaptor = (ArrayAdapter<String>)spinner.getAdapter();
+       for(int i=0;i<adaptor.getCount();i++)
+            if(adaptor.getItem(i).equals(carte.getGenCarte()))
+            {
+                spinner.setSelection(i);
+                break;
+            }
 
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
