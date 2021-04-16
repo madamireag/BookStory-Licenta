@@ -21,8 +21,8 @@ public class AddAuthorActivity extends AppCompatActivity {
         etNumeAutor = findViewById(R.id.etNumeAutor);
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
         btnAddAutor.setOnClickListener(v -> {
-            Autor autor = new Autor(etNumeAutor.getText().toString());
-          //  autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
+        Autor autor = new Autor(etNumeAutor.getText().toString());
+        autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
 
         });
     }

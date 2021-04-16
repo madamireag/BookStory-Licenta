@@ -38,18 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initializeUI();
         auth = FirebaseAuth.getInstance();
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginUser();
-            }
-        });
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(intent);
-            }
+        btnLogin.setOnClickListener(v -> loginUser());
+        btnRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+            startActivity(intent);
         });
 //        LibraryDB db = LibraryDB.getInstanta(getApplicationContext());
 //        List<CarteCuAutor> carteCuAutors = db.getCarteDao().getCarteCuAutori();
@@ -60,25 +52,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser() {
         auth.signInWithEmailAndPassword(etEmail.getText().toString(),etPassword.getText()
-                .toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(),UserProfileActivity.class);
-                    startActivity(intent);
-                } else {
-                    Log.i("EROARE-LOGIN",task.getException().toString());
-                    Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
-                    Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Snackbar.make(layout, e.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
+                .toString()).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),ListareCartiActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Log.i("EROARE-LOGIN",task.getException().toString());
+                        Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+                        Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(e -> Snackbar.make(layout, e.getMessage(), Snackbar.LENGTH_LONG).show());
     }
 
     private void initializeUI() {

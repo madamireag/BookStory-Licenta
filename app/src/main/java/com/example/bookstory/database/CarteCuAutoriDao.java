@@ -20,6 +20,10 @@ public interface CarteCuAutoriDao {
     @Query("SELECT * FROM carti")
     List<CarteCuAutor> getCarteCuAutori();
 
-    @Query("DELETE from AutorCarte")
-    void deleteAllFromJoinTable();
+    @Transaction
+    @Query("SELECT * FROM carti where titlu like '%' || :title || '%'")
+    List<CarteCuAutor> getCarteCuAutoriByName(String title);
+
+    @Query("DELETE from AutorCarte where idCarte = :id")
+    void deleteBookById(long id);
 }

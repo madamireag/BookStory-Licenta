@@ -17,6 +17,7 @@ import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
 
 import java.util.List;
+import java.util.Locale;
 
 public class BooksAdapter extends ArrayAdapter<Carte> {
 
@@ -46,8 +47,7 @@ public class BooksAdapter extends ArrayAdapter<Carte> {
             ImageView cover = view.findViewById(R.id.imageView);
             cover.setImageURI(Uri.parse(carte.getCopertaURI()));
         }
-
-
         return view;
     }
+
 }
