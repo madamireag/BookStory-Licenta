@@ -97,6 +97,16 @@
         android:layout_margin="10dp"
         android:layout_height="30dp"
         />
+    <TextView
+        android:id="@+id/tvAutor"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/autori"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"/>
     <Spinner
         android:id="@+id/spinnerAutor"
         android:layout_width="235dp"

@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btnRegister;
     FirebaseAuth auth;
     RelativeLayout layout;
+    public final String ADMIN_EMAIL = getString(R.string.admin_mail);
+    public final String ADMIN_PASS = getString(R.string.admin_pass);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +56,14 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(etEmail.getText().toString(),etPassword.getText()
                 .toString()).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(),ListareCartiActivity.class);
-                        startActivity(intent);
+                        if(ADMIN_EMAIL.equals(etEmail.getText().toString()) && ADMIN_PASS.equals(etPassword.getText().toString())){
+                            Intent intent = new Intent(getApplicationContext(), ListareCartiActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), ListaCartiUserActivity.class);
+                            startActivity(intent);
+                        }
                     } else {
                         Log.i("EROARE-LOGIN",task.getException().toString());
                         Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
