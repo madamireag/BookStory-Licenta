@@ -31,7 +31,6 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     Button btnSave;
     Intent intent;
     ImageView imageView;
-    Spinner spinnerAutor;
     public Uri bookCoverUri = Uri.EMPTY;
     public static final String ADD_BOOK = "addBook";
     public static final int GALLERY_REQUEST_CODE = 105;
@@ -47,9 +46,6 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         intent = getIntent();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.add_book_genre, R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        List<Autor> autorList = dbInstance.getAutorDao().getAll();
-        ArrayAdapter<Autor> adapter1= new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, autorList);
-        spinnerAutor.setAdapter(adapter1);
 
         if(intent.hasExtra(ListareCartiActivity.EDIT_BOOK)) {
             populeazaCampuri();
@@ -59,19 +55,19 @@ public class AdaugaCarteActivity extends AppCompatActivity {
             startActivityForResult(gallery, GALLERY_REQUEST_CODE);
         });
         btnSave.setOnClickListener(v -> {
-         if(etTitlu.getText().toString().isEmpty()){
+         if(etTitlu.getText().toString().isEmpty()) {
              etTitlu.setError(getString(R.string.introdu_titlul));
-         }else if(etISBN.getText().toString().isEmpty()){
+         } else if(etISBN.getText().toString().isEmpty()) {
              etISBN.setError(getString(R.string.introdu_isbn));
-         }else if(etNrCopii.getText().toString().isEmpty()){
+         } else if(etNrCopii.getText().toString().isEmpty()) {
              etNrCopii.setError(getString(R.string.introdu_nr_de_copii_disponibile));
-         }else{
+         } else {
              Carte carte = new Carte(etTitlu.getText().toString(),etISBN.getText().toString(),
                      Gen.valueOf(spinner.getSelectedItem().toString()),Integer.parseInt(etNrCopii.getText().toString()),bookCoverUri.toString());
              if(isUpdate) {
                  carte.setId((int) editBookId);
                  dbInstance.getCartiDao().update(carte);
-             } else {
+             } else if(!isUpdate){
                  carte.setId((int) dbInstance.getCartiDao().insert(carte));
              }
 
@@ -91,23 +87,26 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         btnAddImagine = findViewById(R.id.btnAddCoperta);
         btnSave = findViewById(R.id.btnSalvare);
         imageView = findViewById(R.id.bookCover);
-        spinnerAutor = findViewById(R.id.spinnerAutor);
+
     }
+
     private void populeazaCampuri() {
        Carte carte = (Carte)intent.getSerializableExtra(ListareCartiActivity.EDIT_BOOK);
+       isUpdate = true;
        editBookId = carte.getIdCarte();
        etISBN.setText(carte.getISBN());
        etTitlu.setText(carte.getTitlu());
        etNrCopii.setText(String.valueOf(carte.getNrCopiiDisponibile()));
        ArrayAdapter<String> adaptor = (ArrayAdapter<String>)spinner.getAdapter();
        for(int i=0;i<adaptor.getCount();i++)
-            if(adaptor.getItem(i).equals(carte.getGenCarte()))
+            if(adaptor.getItem(i).equals(String.valueOf(carte.getGenCarte()).toUpperCase()))
             {
                 spinner.setSelection(i);
                 break;
             }
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

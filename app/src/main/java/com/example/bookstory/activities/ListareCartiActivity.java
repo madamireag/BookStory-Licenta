@@ -36,6 +36,7 @@ public class ListareCartiActivity extends AppCompatActivity {
     ListView listView;
     private static final int REQUEST_CODE = 200;
     public static final int REQUEST_CODE_EDIT_BOOK = 300;
+    private static final int REQUEST_CODE_ADD_AUTOR = 210;
     public static final String EDIT_BOOK = "editBook";
     LibraryDB db;
     public int poz;
@@ -78,14 +79,7 @@ public class ListareCartiActivity extends AppCompatActivity {
         };
         listView.setAdapter(adapter);
         autori = db.getAutorDao().getAll();
-        authorNames = new String[autori.size()];
-        int i=0;
-        authorIds = new long[autori.size()];
-        for(Autor a : autori) {
-            authorNames[i] = autori.get(i).getNume();
-            authorIds[i] = autori.get(i).getIdAutor();
-            i++;
-        }
+        updateListaAutori();
 
     }
 
@@ -121,8 +115,8 @@ public class ListareCartiActivity extends AppCompatActivity {
                             View view =  super.getView(position, convertView, parent);
                             TextView tvAutor = view.findViewById(R.id.autor);
                             StringBuilder stringBuilder = new StringBuilder();
-                            if(carteCuAutorList.get(position).autori != null) {
-                                for (Autor c : carteCuAutorList.get(position).autori) {
+                            if(carteCuAutorList.get(poz).autori != null) {
+                                for (Autor c : carteCuAutorList.get(poz).autori) {
                                     stringBuilder.append(c.getNume());
                                     stringBuilder.append(",");
                                 }
@@ -135,6 +129,10 @@ public class ListareCartiActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
             }
+        } else if(requestCode == REQUEST_CODE_ADD_AUTOR && resultCode == RESULT_OK && data!=null) {
+            Autor autor = (Autor) data.getSerializableExtra(AddAuthorActivity.ADD_AUTOR);
+            autori.add(autor);
+            updateListaAutori();
         }
     }
 
@@ -144,6 +142,16 @@ public class ListareCartiActivity extends AppCompatActivity {
         }
         for(CarteCuAutor c : carteCuAutorList){
             autoriCarte = c.autori;
+        }
+    }
+    private void updateListaAutori() {
+        authorNames = new String[autori.size()];
+        int i=0;
+        authorIds = new long[autori.size()];
+        for(Autor a : autori) {
+            authorNames[i] = autori.get(i).getNume();
+            authorIds[i] = autori.get(i).getIdAutor();
+            i++;
         }
     }
     private void updateUI() {
@@ -183,26 +191,22 @@ public class ListareCartiActivity extends AppCompatActivity {
             case R.id.ctxaddautor:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Autori disponibili");
-                builder.setMultiChoiceItems(authorNames, checkedAuthors, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        checkedAuthors[which] = isChecked;
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),"OK button was pressed",Toast.LENGTH_LONG).show();
-                        for (int i = 0; i<checkedAuthors.length; i++){
-                            boolean checked = checkedAuthors[i];
-                            if (checked) {
-                                AutorCarte ac = new AutorCarte(authorIds[i],adapter.getItem(info.position).getIdCarte());
-                                Log.i("AUTOR-ID",String.valueOf(authorIds[i]));
-                                db.getCarteDao().insert(ac);
-                               // updateUI();
-                            }
+                builder.setMultiChoiceItems(authorNames, checkedAuthors, (dialog, which, isChecked) -> checkedAuthors[which] = isChecked);
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    Toast.makeText(getApplicationContext(),"OK button was pressed",Toast.LENGTH_LONG).show();
+                    for (int i = 0; i<checkedAuthors.length; i++){
+                        boolean checked = checkedAuthors[i];
+                        if (checked) {
+                            AutorCarte ac = new AutorCarte(authorIds[i],adapter.getItem(info.position).getIdCarte());
+                            Log.i("AUTOR-ID",String.valueOf(authorIds[i]));
+                            db.getCarteDao().insert(ac);
+                            updateUI();
                         }
                     }
+                });
+                builder.setNeutralButton("Adauga autor", (dialog, which) -> {
+                    Intent intent = new Intent(getApplicationContext(), AddAuthorActivity.class);
+                    startActivityForResult(intent,REQUEST_CODE_ADD_AUTOR);
                 });
                 builder.setNegativeButton("Cancel", (dialog, which) -> Toast.makeText(getApplicationContext(),"Cancel button was pressed",Toast.LENGTH_LONG).show());
                 AlertDialog newDialog = builder.create();
@@ -218,18 +222,16 @@ public class ListareCartiActivity extends AppCompatActivity {
 
             case R.id.ctxdelete:
             AlertDialog dialog = new AlertDialog.Builder(ListareCartiActivity.this)
-                        .setTitle("Confirmare stergere")
-                        .setMessage("Doriti sa stergeti cartea?")
-                        .setNegativeButton("No", (dialogInterface, which) -> dialogInterface.cancel()).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                db.getCarteDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
-                                db.getCartiDao().deleteBook(adapter.getItem(info.position));
-                                adapter.remove(adapter.getItem(info.position));
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(getApplicationContext(), "Cartea a fost stearsa!",Toast.LENGTH_LONG).show();
-                                dialogInterface.cancel();
-                            }
+                        .setTitle(R.string.confirmare_stergere)
+                        .setMessage(R.string.mesaj_stergere)
+                        .setNegativeButton("No", (dialogInterface, which) -> dialogInterface.cancel())
+                        .setPositiveButton("Yes", (dialogInterface, which) -> {
+                            db.getCarteDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
+                            db.getCartiDao().deleteBook(adapter.getItem(info.position));
+                            adapter.remove(adapter.getItem(info.position));
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(getApplicationContext(), R.string.carte_stearsa, Toast.LENGTH_LONG).show();
+                            dialogInterface.cancel();
                         }).create();
             dialog.show();
             return true;

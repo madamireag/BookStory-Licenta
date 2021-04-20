@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "autori")
-public class Autor {
+public class Autor implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long idAutor;
     private String nume;
