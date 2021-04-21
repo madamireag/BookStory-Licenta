@@ -7,12 +7,12 @@ import androidx.room.Relation;
 import java.util.List;
 
 public class ImprumutCuCarte {
-    //@Embedded
+    @Embedded
     public Imprumut imprumut;
-//    @Relation(
-//            parentColumn = "idImprumut",
-//            entityColumn = "idCarte",
-//            associateBy = @Junction(ImprumutCarte.class)
-//    )
+    @Relation(
+           parentColumn = "idImprumut",
+          entityColumn = "idCarte",
+          associateBy = @Junction(ImprumutCarte.class)
+   )
     public List<Carte> listaCartiImprumut;
 }

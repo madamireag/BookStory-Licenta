@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/gradient_background"
     tools:context=".activities.AddAuthorActivity">
 
     <TextView
         android:id="@+id/tvAddAutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/adauga_un_autor_nou" />
 
     <EditText
@@ -17,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="10dp"
         android:inputType="textPersonName"
         android:hint="@string/nume_autor"
         />
@@ -25,5 +28,6 @@
         android:id="@+id/btnAddAutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corners"
         android:text="@string/adauga_autorul" />
 </LinearLayout>

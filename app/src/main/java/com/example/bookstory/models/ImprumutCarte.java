@@ -1,5 +1,8 @@
 package com.example.bookstory.models;
 
+import androidx.room.Entity;
+
+@Entity(primaryKeys = {"idImprumut", "idCarte"})
 public class ImprumutCarte {
     private long idImprumut;
     private long idCarte;

@@ -91,6 +91,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     }
 
     private void populeazaCampuri() {
+
        Carte carte = (Carte)intent.getSerializableExtra(ListareCartiActivity.EDIT_BOOK);
        isUpdate = true;
        editBookId = carte.getIdCarte();

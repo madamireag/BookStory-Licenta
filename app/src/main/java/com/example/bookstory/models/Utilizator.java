@@ -1,36 +1,50 @@
 package com.example.bookstory.models;
 
-//@Entity(tableName = "utilizatori")
-public class Utilizator {
-    //@PrimaryKey(autoGenerate = true)
-    private int idUtilizator;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+
+@Entity(tableName = "utilizatori")
+public class Utilizator  {
+
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String numeComplet;
-    private String email;
-    private String password;
     private String adresa;
     private String nrTelefon;
-
-    public Utilizator(int idUtilizator, String numeComplet, String email, String password, String adresa, String nrTelefon) {
-        this.idUtilizator = idUtilizator;
+    private String email;
+    private String password;
+    public Utilizator(long id, String numeComplet, String email, String password, String adresa, String nrTelefon) {
+        this.id = id;
         this.numeComplet = numeComplet;
         this.email = email;
         this.password = password;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
-    //@Ignore
+    @Ignore
     public Utilizator(String numeComplet, String adresa, String nrTelefon) {
         this.numeComplet = numeComplet;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
-
-    public int getIdUtilizator() {
-        return idUtilizator;
+    @Ignore
+    public Utilizator(String numeComplet, String adresa, String nrTelefon, String email, String password) {
+        this.numeComplet = numeComplet;
+        this.adresa = adresa;
+        this.nrTelefon = nrTelefon;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setIdUtilizator(int idUtilizator) {
-        this.idUtilizator = idUtilizator;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNumeComplet() {
@@ -72,4 +86,6 @@ public class Utilizator {
     public void setNrTelefon(String nrTelefon) {
         this.nrTelefon = nrTelefon;
     }
+
+
 }

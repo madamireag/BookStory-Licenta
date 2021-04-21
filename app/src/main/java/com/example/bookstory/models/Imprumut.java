@@ -1,10 +1,13 @@
 package com.example.bookstory.models;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
-//@Entity(tableName = "imprumuturi")
+@Entity(tableName = "imprumuturi", foreignKeys = @ForeignKey(entity = Utilizator.class, parentColumns = "id", childColumns = "idUtilizator"))
 public class Imprumut {
+    @PrimaryKey(autoGenerate = true)
     private long idImprumut;
     private long idUtilizator;
     private Date dataReturnare;
