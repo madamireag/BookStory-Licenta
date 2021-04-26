@@ -14,7 +14,7 @@ import com.example.bookstory.models.Imprumut;
 import com.example.bookstory.models.ImprumutCarte;
 import com.example.bookstory.models.Utilizator;
 
-@Database(entities = {Carte.class, Autor.class, AutorCarte.class, Utilizator.class, Imprumut.class, ImprumutCarte.class},version = 3,exportSchema = false)
+@Database(entities = {Carte.class, Autor.class, AutorCarte.class, Utilizator.class, Imprumut.class, ImprumutCarte.class},version = 4,exportSchema = false)
 @TypeConverters({DateConvertor.class,EnumConvertor.class})
 public abstract class LibraryDB extends RoomDatabase {
     private final static String DB_NAME = "library.db";
@@ -36,6 +36,8 @@ public abstract class LibraryDB extends RoomDatabase {
     public abstract CarteDao getCartiDao();
     public abstract AutorDao getAutorDao();
     public abstract UserDao getUserDao();
+    public abstract ImprumutDao getImprumutDao();
+    public abstract ImprumutCuCarteDao getImprumutCuCarteDao();
 }
 
 

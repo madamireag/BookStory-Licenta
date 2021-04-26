@@ -107,6 +107,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                     carteCuAutorList.get(poz).carte.setTitlu(book.getTitlu());
                     carteCuAutorList.get(poz).carte.setGenCarte(book.getGenCarte());
                     carteCuAutorList.get(poz).carte.setNrCopiiDisponibile(book.getNrCopiiDisponibile());
+                    carteCuAutorList.get(poz).carte.setCopertaURI(book.getCopertaURI());
                     populeazaListaCarti();
                     BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista,carti,getLayoutInflater()){
                         @NonNull
@@ -133,6 +134,7 @@ public class ListareCartiActivity extends AppCompatActivity {
             Autor autor = (Autor) data.getSerializableExtra(AddAuthorActivity.ADD_AUTOR);
             autori.add(autor);
             updateListaAutori();
+            populeazaListaCarti();
         }
     }
 
@@ -162,7 +164,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                 View view =  super.getView(position, convertView, parent);
                 TextView tvAutor = view.findViewById(R.id.autor);
                 StringBuilder stringBuilder = new StringBuilder();
-                for (Autor c : carteCuAutorList.get(position).autori) {
+                for (Autor c : carteCuAutorList.get(poz).autori) {
                         stringBuilder.append(c.getNume());
                         stringBuilder.append(",");
                 }
@@ -189,6 +191,7 @@ public class ListareCartiActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.ctxaddautor:
+                poz = info.position;
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Autori disponibili");
                 builder.setMultiChoiceItems(authorNames, checkedAuthors, (dialog, which, isChecked) -> checkedAuthors[which] = isChecked);

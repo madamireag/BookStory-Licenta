@@ -2,6 +2,7 @@ package com.example.bookstory.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -16,6 +17,14 @@ public class Imprumut {
 
     public Imprumut(long idImprumut, long idUtilizator, Date dataReturnare, Date dataScadenta, double taxaIntarziere) {
         this.idImprumut = idImprumut;
+        this.idUtilizator = idUtilizator;
+        this.dataReturnare = dataReturnare;
+        this.dataScadenta = dataScadenta;
+        this.taxaIntarziere = taxaIntarziere;
+    }
+
+    @Ignore
+    public Imprumut(long idUtilizator, Date dataReturnare, Date dataScadenta, double taxaIntarziere) {
         this.idUtilizator = idUtilizator;
         this.dataReturnare = dataReturnare;
         this.dataScadenta = dataScadenta;

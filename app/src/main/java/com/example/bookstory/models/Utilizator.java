@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "utilizatori")
 public class Utilizator  {
 
-
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String numeComplet;
@@ -16,6 +15,19 @@ public class Utilizator  {
     private String nrTelefon;
     private String email;
     private String password;
+    String uid;
+
+    public Utilizator(long id, String numeComplet, String adresa, String nrTelefon, String email, String password, String uid) {
+        this.id = id;
+        this.numeComplet = numeComplet;
+        this.adresa = adresa;
+        this.nrTelefon = nrTelefon;
+        this.email = email;
+        this.password = password;
+        this.uid = uid;
+    }
+
+    @Ignore
     public Utilizator(long id, String numeComplet, String email, String password, String adresa, String nrTelefon) {
         this.id = id;
         this.numeComplet = numeComplet;
@@ -24,19 +36,30 @@ public class Utilizator  {
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
+
     @Ignore
     public Utilizator(String numeComplet, String adresa, String nrTelefon) {
         this.numeComplet = numeComplet;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
     }
+
     @Ignore
-    public Utilizator(String numeComplet, String adresa, String nrTelefon, String email, String password) {
+    public Utilizator(String numeComplet, String adresa, String nrTelefon, String email, String password, String uid) {
         this.numeComplet = numeComplet;
         this.adresa = adresa;
         this.nrTelefon = nrTelefon;
         this.email = email;
         this.password = password;
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public long getId() {

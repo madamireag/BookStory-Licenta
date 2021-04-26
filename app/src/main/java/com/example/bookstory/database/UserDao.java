@@ -17,4 +17,7 @@ public interface UserDao {
     @Query("select * from utilizatori")
     List<Utilizator> getAllUsers();
 
+    @Query("select * from utilizatori where uid=:uid")
+    Utilizator getUserByUid(String uid);
+
 }

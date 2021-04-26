@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 
+import com.example.bookstory.models.ImprumutCarte;
 import com.example.bookstory.models.ImprumutCuCarte;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ImprumutCuCarteDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(ImprumutCuCarte ic);
+    void insert(ImprumutCarte ic);
 
     @Transaction
     @Query("SELECT * FROM imprumuturi")

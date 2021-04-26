@@ -44,7 +44,7 @@ public class BooksAdapter extends ArrayAdapter<Carte> {
             TextView tvAutor = view.findViewById(R.id.autor);
             TextView tvGen = view.findViewById(R.id.gen);
             tvGen.setText(String.valueOf(carte.getGenCarte()));
-            ImageView cover = view.findViewById(R.id.imageView);
+            ImageView cover = view.findViewById(R.id.ivCoperta);
             cover.setImageURI(Uri.parse(carte.getCopertaURI()));
         }
         return view;

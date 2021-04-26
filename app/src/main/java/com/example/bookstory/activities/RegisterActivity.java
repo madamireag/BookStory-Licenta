@@ -58,8 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 Utilizator utilizator = new Utilizator(etName.getText().toString(), etAdresa.getText().toString(),
-                        String.valueOf(etNrTelefon.getText()), email, password);
+                        String.valueOf(etNrTelefon.getText()), email, password, task.getResult().getUser().getUid());
                 utilizator.setId(dbInstance.getUserDao().insert(utilizator));
+
                 Toast.makeText(getApplicationContext(), R.string.reg_successfull, Toast.LENGTH_LONG).show();
             }
             else {
@@ -69,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }).addOnSuccessListener(authResult -> {
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
+
             authResult.getUser().updateProfile(profileUpdates);
         });
 
