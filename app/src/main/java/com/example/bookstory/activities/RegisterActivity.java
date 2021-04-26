@@ -70,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }).addOnSuccessListener(authResult -> {
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
-
             authResult.getUser().updateProfile(profileUpdates);
         });
 

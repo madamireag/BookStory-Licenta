@@ -51,7 +51,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
             populeazaCampuri();
         }
         btnAddImagine.setOnClickListener(v -> {
-            Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent gallery = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(gallery, GALLERY_REQUEST_CODE);
         });
         btnSave.setOnClickListener(v -> {

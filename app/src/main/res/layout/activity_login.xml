@@ -37,14 +37,6 @@
         android:layout_below="@+id/etPasswordLogin"
         android:text="@string/remember_me" />
 
-    <CheckBox
-        android:id="@+id/cbAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etPasswordLogin"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="18dp"
-        android:text="@string/login_as_admin" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -60,7 +52,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="119dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cbAdmin"
+        android:layout_below="@+id/checkBox"
         android:layout_marginStart="190dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/btnLogin"

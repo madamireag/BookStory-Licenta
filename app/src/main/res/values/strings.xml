@@ -52,6 +52,7 @@
     <string name="confirmare_finalizare">Confirmare finalizare</string>
     <string name="mesaj_confirm_finalizare">Doriti sa finalizati imprumutul?</string>
     <string name="imprumut_finalizat_toast">Imprumut finalizat!</string>
+    <string name="renunta_la_carte">Renunta la carte</string>
     <string-array name="add_book_genre">
         <item>FICTION</item>
         <item>ROMANCE</item>

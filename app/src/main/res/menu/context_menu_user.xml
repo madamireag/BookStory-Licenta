@@ -2,4 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/ctxImprumutaCarte"
         android:title="@string/imprumuta_cartea" />
+<item android:id="@+id/ctxRenunta"
+        android:title="@string/renunta_la_carte" />
 </menu>
