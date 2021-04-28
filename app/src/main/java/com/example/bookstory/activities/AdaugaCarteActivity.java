@@ -1,8 +1,5 @@
 package com.example.bookstory.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,13 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.bookstory.R;
 import com.example.bookstory.database.LibraryDB;
-import com.example.bookstory.models.Autor;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.Gen;
-
-import java.util.List;
 
 public class AdaugaCarteActivity extends AppCompatActivity {
     EditText etTitlu;

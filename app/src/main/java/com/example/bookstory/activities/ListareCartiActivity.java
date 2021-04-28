@@ -3,8 +3,14 @@ package com.example.bookstory.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,10 +32,13 @@ import com.example.bookstory.models.Autor;
 import com.example.bookstory.models.AutorCarte;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class ListareCartiActivity extends AppCompatActivity {
 
@@ -62,22 +71,7 @@ public class ListareCartiActivity extends AppCompatActivity {
             startActivityForResult(intent,REQUEST_CODE);
         });
 
-        BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista,carti,getLayoutInflater()){
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view =  super.getView(position, convertView, parent);
-                TextView tvAutor = view.findViewById(R.id.autor);
-                StringBuilder stringBuilder = new StringBuilder();
-                for(Autor c : carteCuAutorList.get(position).autori){
-                stringBuilder.append(c.getNume());
-                stringBuilder.append(",");
-                }
-                tvAutor.setText(stringBuilder.toString());
-                return view;
-            }
-        };
-        listView.setAdapter(adapter);
+        updateUI();
         autori = db.getAutorDao().getAll();
         updateListaAutori();
 
@@ -116,9 +110,9 @@ public class ListareCartiActivity extends AppCompatActivity {
                             View view =  super.getView(position, convertView, parent);
                             TextView tvAutor = view.findViewById(R.id.autor);
                             StringBuilder stringBuilder = new StringBuilder();
-                            if(carteCuAutorList.get(poz).autori != null) {
-                                for (Autor c : carteCuAutorList.get(poz).autori) {
-                                    stringBuilder.append(c.getNume());
+                            for(CarteCuAutor c : carteCuAutorList) {
+                                for(Autor a : c.autori) {
+                                    stringBuilder.append(a.getNume());
                                     stringBuilder.append(",");
                                 }
                             }
@@ -148,7 +142,7 @@ public class ListareCartiActivity extends AppCompatActivity {
     }
     private void updateListaAutori() {
         authorNames = new String[autori.size()];
-        int i=0;
+        int i = 0;
         authorIds = new long[autori.size()];
         for(Autor a : autori) {
             authorNames[i] = autori.get(i).getNume();
@@ -164,11 +158,12 @@ public class ListareCartiActivity extends AppCompatActivity {
                 View view =  super.getView(position, convertView, parent);
                 TextView tvAutor = view.findViewById(R.id.autor);
                 StringBuilder stringBuilder = new StringBuilder();
-                for (Autor c : carteCuAutorList.get(poz).autori) {
-                        stringBuilder.append(c.getNume());
+                for(CarteCuAutor c : carteCuAutorList) {
+                    for(Autor a : c.autori) {
+                        stringBuilder.append(a.getNume());
                         stringBuilder.append(",");
+                    }
                 }
-
                 tvAutor.setText(stringBuilder.toString());
                 return view;
             }
@@ -183,6 +178,7 @@ public class ListareCartiActivity extends AppCompatActivity {
         inflater.inflate(R.menu.context_menu_admin, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();

@@ -37,6 +37,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
+
 public class ListaCartiUserActivity extends AppCompatActivity {
 
     ListView listView;
@@ -47,6 +49,8 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     List<Carte> carti = new ArrayList<>();
     List<Carte> cartiImprumutate = new ArrayList<>();
     FirebaseAuth auth;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,6 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         db = LibraryDB.getInstanta(getApplicationContext());
         auth = FirebaseAuth.getInstance();
         carteCuAutorList = db.getCarteDao().getCarteCuAutori();
-
         listareCarti();
         registerForContextMenu(listView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -96,9 +99,12 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                         }
                         Toast.makeText(getApplicationContext(), R.string.imprumut_finalizat_toast, Toast.LENGTH_LONG).show();
                         dialogInterface.cancel();
+
                     }).create();
             dialog.show();
         });
+
+
     }
 
     @Override
@@ -152,4 +158,6 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         };
         listView.setAdapter(adapter);
     }
+
+
 }
