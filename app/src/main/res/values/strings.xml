@@ -33,7 +33,7 @@
     <string name="invalid_password">Password should be at least 6 characters long!</string>
     <string name="reg_failed">Registration failed! Please try again later</string>
     <string name="reg_successfull">Registration successful!</string>
-    <string name="login_successfull">Login successfull!</string>
+    <string name="login_successfull">Login successful!</string>
     <string name="login_failed">Login failed!</string>
     <string name="schimba_poza_de_profil">Schimba poza de profil</string>
     <string name="salveaza_schimbari">Salveaza schimbari</string>
