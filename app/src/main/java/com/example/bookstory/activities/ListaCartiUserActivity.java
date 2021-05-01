@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +43,6 @@ import java.util.List;
 public class ListaCartiUserActivity extends AppCompatActivity {
 
     ListView listView;
-    SearchView searchView;
     LibraryDB db;
     Button btnFinalizeaza;
     List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
@@ -57,27 +57,11 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_carti_user);
         listView = findViewById(R.id.lvCartiUser);
         btnFinalizeaza = findViewById(R.id.btnFinalizeazaImprumut);
-        searchView = findViewById(R.id.search);
         db = LibraryDB.getInstanta(getApplicationContext());
         auth = FirebaseAuth.getInstance();
-        carteCuAutorList = db.getCarteDao().getCarteCuAutori();
-        listareCarti();
+        //carteCuAutorList = db.getCarteDao().getCarteCuAutori();
+       // listareCarti();
         registerForContextMenu(listView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                carteCuAutorList.clear();
-                carti.clear();
-                carteCuAutorList = db.getCarteDao().getCarteCuAutoriByName(searchView.getQuery().toString());
-                listareCarti();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-               return false;
-            }
-        });
         btnFinalizeaza.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(ListaCartiUserActivity.this)
                     .setTitle(R.string.confirmare_finalizare)
@@ -129,6 +113,29 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         }
         return false;
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu,menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                carteCuAutorList.clear();
+                carti.clear();
+                carteCuAutorList = db.getCarteDao().getCarteCuAutoriByName(searchView.getQuery().toString());
+                listareCarti();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void listareCarti() {
