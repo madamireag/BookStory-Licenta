@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), ListareCartiActivity.class);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(getApplicationContext(), ListaCartiUserActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                             startActivity(intent);
                         }
                     } else {

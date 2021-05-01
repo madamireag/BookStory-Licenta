@@ -25,10 +25,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class UserProfileActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE_PROFILE = 111;
-    Button btnChangeProfilePic;
     Button btnSaveChanges;
     Button btnDeleteAccount;
     EditText etDisplayName;
@@ -36,7 +37,8 @@ public class UserProfileActivity extends AppCompatActivity {
     EditText etChangePassword;
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
-    ImageView imageView;
+    CircleImageView circleImageView;
+
     public Uri profilePic = Uri.EMPTY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,15 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (auth.getCurrentUser() != null) {
             firebaseUser = auth.getCurrentUser();
-            profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
+            if(firebaseUser.getPhotoUrl() != null){
+                profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
+            }
             etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
             etChangeEmail.setText(firebaseUser.getEmail());
-            imageView.setImageURI(profilePic);
+            circleImageView.setImageURI(profilePic);
         }
 
-        btnChangeProfilePic.setOnClickListener(v -> {
+        circleImageView.setOnClickListener(v -> {
             Intent gallery = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(gallery, GALLERY_REQUEST_CODE_PROFILE);
         });
@@ -112,7 +116,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Profile pic updated!",Toast.LENGTH_LONG).show();
-                            imageView.setImageURI(profilePic);
+                            circleImageView.setImageURI(profilePic);
                             Log.i("PROFILE-PIC-GALLERY",profilePic.toString());
                     }
                     });
@@ -120,8 +124,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void initializeUI() {
-        btnChangeProfilePic = findViewById(R.id.btnSchimbaPoza);
-        imageView = findViewById(R.id.imageView2);
+        circleImageView = findViewById(R.id.imageView2);
         etDisplayName = findViewById(R.id.etDisplayName);
         etChangeEmail = findViewById(R.id.etChangeEmail);
         etChangePassword = findViewById(R.id.etChangePassword);

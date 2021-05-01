@@ -9,5 +9,5 @@
     <color name="start_color">#fbc2eb</color>
     <color name="stop_color">#a6c1ee</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="cardBackground">#F0B49D</color>
+    <color name="cardBackground">#E6E6FA</color>
 </resources>
