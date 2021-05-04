@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
                         if(ADMIN_EMAIL.equals(etEmail.getText().toString()) && ADMIN_PASS.equals(etPassword.getText().toString())){
-                            Intent intent = new Intent(getApplicationContext(), ListareCartiActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), AdminDashboardActivity.class);
                             startActivity(intent);
                         } else {
                             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);

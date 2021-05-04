@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         tools:ignore="NestedScrolling" />
+
     <Button
             android:id="@+id/btnFinalizeazaImprumut"
             android:layout_width="wrap_content"
@@ -23,5 +24,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_rounded_corners"
             android:text="@string/finalizeaza_imprumut" />
+
 </LinearLayout>
 </ScrollView>

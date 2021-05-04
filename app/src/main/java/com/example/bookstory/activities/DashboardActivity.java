@@ -1,11 +1,10 @@
 package com.example.bookstory.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.bookstory.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,12 +32,9 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
             startActivity(intent);
         });
-        cvListaCarti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListaCartiUserActivity.class);
-                startActivity(intent);
-            }
+        cvListaCarti.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ListaCartiUserActivity.class);
+            startActivity(intent);
         });
 
     }
