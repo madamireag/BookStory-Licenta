@@ -22,6 +22,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     CardView cvSignOut;
     LibraryDB db;
     FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +32,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
         db = LibraryDB.getInstanta(getApplicationContext());
 
         cvProfileAdmin.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),UserProfileActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
             startActivity(intent);
         });
         cvListBooks.setOnClickListener(v -> {
-             Intent intent = new Intent(getApplicationContext(), ListareCartiActivity.class);
-             startActivity(intent);
-         });
+            Intent intent = new Intent(getApplicationContext(), ListareCartiActivity.class);
+            startActivity(intent);
+        });
         cvDeleteAllAuthors.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(AdminDashboardActivity.this)
                     .setTitle(R.string.confirmare_stergere)
@@ -63,7 +64,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             dialog.show();
         });
         cvSignOut.setOnClickListener(v -> {
-            if(auth.getCurrentUser() != null) {
+            if (auth.getCurrentUser() != null) {
                 auth.signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);

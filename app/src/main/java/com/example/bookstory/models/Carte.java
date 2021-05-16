@@ -24,6 +24,7 @@ public class Carte implements Serializable {
         this.nrCopiiDisponibile = nrCopiiDisponibile;
         this.copertaURI = copertaURI;
     }
+
     @Ignore
     public Carte(String titlu, String ISBN, Gen genCarte, int nrCopiiDisponibile, String copertaURI) {
         this.titlu = titlu;

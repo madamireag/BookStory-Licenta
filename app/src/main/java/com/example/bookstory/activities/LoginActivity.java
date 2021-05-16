@@ -34,11 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
             startActivity(intent);
         });
-//        LibraryDB db = LibraryDB.getInstanta(getApplicationContext());
-//        List<CarteCuAutor> carteCuAutors = db.getCarteDao().getCarteCuAutori();
 
-//        Log.i("TESTCARTE",carteCuAutors.get(0).carte.toString());
-//        Log.i("TESTAUTORICARTE",carteCuAutors.get(0).autori.get(0).toString());
     }
 
     private void loginUser() {

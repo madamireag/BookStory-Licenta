@@ -14,15 +14,15 @@ import com.example.bookstory.models.Imprumut;
 import com.example.bookstory.models.ImprumutCarte;
 import com.example.bookstory.models.Utilizator;
 
-@Database(entities = {Carte.class, Autor.class, AutorCarte.class, Utilizator.class, Imprumut.class, ImprumutCarte.class},version = 4,exportSchema = false)
-@TypeConverters({DateConvertor.class,EnumConvertor.class})
+@Database(entities = {Carte.class, Autor.class, AutorCarte.class, Utilizator.class, Imprumut.class, ImprumutCarte.class}, version = 4, exportSchema = false)
+@TypeConverters({DateConvertor.class, EnumConvertor.class})
 public abstract class LibraryDB extends RoomDatabase {
     private final static String DB_NAME = "library.db";
     private static LibraryDB instanta;
 
-    public static LibraryDB getInstanta(Context context){
+    public static LibraryDB getInstanta(Context context) {
         if (instanta == null) {
-           synchronized (LibraryDB.class) {
+            synchronized (LibraryDB.class) {
                 if (instanta == null) {
                     instanta = Room.databaseBuilder(context, LibraryDB.class, DB_NAME)
                             .allowMainThreadQueries()
@@ -32,11 +32,17 @@ public abstract class LibraryDB extends RoomDatabase {
         }
         return instanta;
     }
-    public abstract CarteCuAutoriDao getCarteDao();
+
+    public abstract CarteCuAutoriDao getCarteCuAutoriDao();
+
     public abstract CarteDao getCartiDao();
+
     public abstract AutorDao getAutorDao();
+
     public abstract UserDao getUserDao();
+
     public abstract ImprumutDao getImprumutDao();
+
     public abstract ImprumutCuCarteDao getImprumutCuCarteDao();
 }
 

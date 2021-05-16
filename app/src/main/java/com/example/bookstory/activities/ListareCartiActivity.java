@@ -3,15 +3,9 @@ package com.example.bookstory.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,7 +57,7 @@ public class ListareCartiActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         db = LibraryDB.getInstanta(getApplicationContext());
-        carteCuAutorList = db.getCarteDao().getCarteCuAutori();
+        carteCuAutorList = db.getCarteCuAutoriDao().getCarteCuAutori();
         populeazaListaCarti();
         registerForContextMenu(listView);
         floatingActionButton.setOnClickListener(v -> {
@@ -198,7 +192,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                         if (checked) {
                             AutorCarte ac = new AutorCarte(authorIds[i],adapter.getItem(info.position).getIdCarte());
                             Log.i("AUTOR-ID",String.valueOf(authorIds[i]));
-                            db.getCarteDao().insert(ac);
+                            db.getCarteCuAutoriDao().insert(ac);
                             updateUI();
                         }
                     }
@@ -225,7 +219,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                         .setMessage(R.string.mesaj_stergere)
                         .setNegativeButton("No", (dialogInterface, which) -> dialogInterface.cancel())
                         .setPositiveButton("Yes", (dialogInterface, which) -> {
-                            db.getCarteDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
+                            db.getCarteCuAutoriDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
                             db.getCartiDao().deleteBook(adapter.getItem(info.position));
                             adapter.remove(adapter.getItem(info.position));
                             adapter.notifyDataSetChanged();

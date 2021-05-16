@@ -13,8 +13,10 @@ import java.util.List;
 public interface AutorDao {
     @Insert
     long insert(Autor autor);
+
     @Query("delete from autori")
     void deleteAll();
+
     @Query("select * from autori")
     List<Autor> getAll();
 

@@ -43,29 +43,28 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), R.string.enter_email, Toast.LENGTH_LONG).show();
             progressBar.setVisibility(View.GONE);
         }
-        if(TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_LONG).show();
             progressBar.setVisibility(View.GONE);
             return;
         }
-        if(password.length() < 6){
+        if (password.length() < 6) {
             Toast.makeText(getApplicationContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
         }
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
                 Utilizator utilizator = new Utilizator(etName.getText().toString(), etAdresa.getText().toString(),
                         String.valueOf(etNrTelefon.getText()), email, password, task.getResult().getUser().getUid());
                 utilizator.setId(dbInstance.getUserDao().insert(utilizator));
 
                 Toast.makeText(getApplicationContext(), R.string.reg_successfull, Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 Toast.makeText(getApplicationContext(), R.string.reg_failed, Toast.LENGTH_LONG).show();
-              //  Log.i("EROARE",task.getResult().toString());
+                //  Log.i("EROARE",task.getResult().toString());
             }
             progressBar.setVisibility(View.GONE);
         }).addOnSuccessListener(authResult -> {

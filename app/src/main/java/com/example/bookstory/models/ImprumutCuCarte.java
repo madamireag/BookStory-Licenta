@@ -10,9 +10,9 @@ public class ImprumutCuCarte {
     @Embedded
     public Imprumut imprumut;
     @Relation(
-           parentColumn = "idImprumut",
-          entityColumn = "idCarte",
-          associateBy = @Junction(ImprumutCarte.class)
-   )
+            parentColumn = "idImprumut",
+            entityColumn = "idCarte",
+            associateBy = @Junction(ImprumutCarte.class)
+    )
     public List<Carte> listaCartiImprumut;
 }

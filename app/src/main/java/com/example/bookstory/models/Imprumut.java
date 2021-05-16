@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+
 @Entity(tableName = "imprumuturi", foreignKeys = @ForeignKey(entity = Utilizator.class, parentColumns = "id", childColumns = "idUtilizator"))
 public class Imprumut {
     @PrimaryKey(autoGenerate = true)

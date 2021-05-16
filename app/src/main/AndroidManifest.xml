@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookStory">
-        <activity android:name=".activities.AdminDashboardActivity"></activity>
+        <activity android:name=".activities.RecomandariActivity"></activity>
+        <activity android:name=".activities.AdminDashboardActivity" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.VizualizareImprumuturiActivity" />
         <activity android:name=".activities.ListaCartiUserActivity" />

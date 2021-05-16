@@ -39,7 +39,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
 public class ListaCartiUserActivity extends AppCompatActivity {
 
     ListView listView;
@@ -59,8 +58,8 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         btnFinalizeaza = findViewById(R.id.btnFinalizeazaImprumut);
         db = LibraryDB.getInstanta(getApplicationContext());
         auth = FirebaseAuth.getInstance();
-        //carteCuAutorList = db.getCarteDao().getCarteCuAutori();
-       // listareCarti();
+        carteCuAutorList = db.getCarteCuAutoriDao().getCarteCuAutori();
+        listareCarti();
         registerForContextMenu(listView);
         btnFinalizeaza.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(ListaCartiUserActivity.this)
@@ -74,11 +73,11 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                         Utilizator utilizator = db.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
-                        calendar.add(Calendar.DATE,14);
-                        Imprumut imprumut = new Imprumut(utilizator.getId(), new Date(),calendar.getTime(),0);
+                        calendar.add(Calendar.DATE, 14);
+                        Imprumut imprumut = new Imprumut(utilizator.getId(), new Date(), calendar.getTime(), 0);
                         imprumut.setIdImprumut(db.getImprumutDao().insert(imprumut));
-                        for(Carte c : cartiImprumutate) {
-                            ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(),c.getIdCarte());
+                        for (Carte c : cartiImprumutate) {
+                            ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(), c.getIdCarte());
                             db.getImprumutCuCarteDao().insert(imprumutCarte);
                         }
                         Toast.makeText(getApplicationContext(), R.string.imprumut_finalizat_toast, Toast.LENGTH_LONG).show();
@@ -104,12 +103,12 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         BooksAdapter adapter = (BooksAdapter) listView.getAdapter();
         switch (item.getItemId()) {
-        case R.id.ctxImprumutaCarte:
-            cartiImprumutate.add(adapter.getItem(info.position));
-            break;
-         case R.id.ctxRenunta:
+            case R.id.ctxImprumutaCarte:
+                cartiImprumutate.add(adapter.getItem(info.position));
+                break;
+            case R.id.ctxRenunta:
                 cartiImprumutate.remove(adapter.getItem(info.position));
-        return true;
+                return true;
         }
         return false;
 
@@ -117,7 +116,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu,menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -125,7 +124,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 carteCuAutorList.clear();
                 carti.clear();
-                carteCuAutorList = db.getCarteDao().getCarteCuAutoriByName(searchView.getQuery().toString());
+                carteCuAutorList = db.getCarteCuAutoriDao().getCarteCuAutoriByName(searchView.getQuery().toString());
                 listareCarti();
                 return true;
             }
@@ -139,24 +138,24 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     }
 
     private void listareCarti() {
-        for(CarteCuAutor c : carteCuAutorList){
+        for (CarteCuAutor c : carteCuAutorList) {
             carti.add(c.carte);
         }
-        BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista,carti,getLayoutInflater()){
+        BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, carti, getLayoutInflater()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view =  super.getView(position, convertView, parent);
+                View view = super.getView(position, convertView, parent);
                 TextView tvAutor = view.findViewById(R.id.autor);
                 StringBuilder stringBuilder = new StringBuilder();
                 Uri uri = Uri.parse(carti.get(position).getCopertaURI());
                 ImageView iv = view.findViewById(R.id.ivCoperta);
                 iv.setImageURI(uri);
 
-                for(CarteCuAutor c : carteCuAutorList) {
-                    for(Autor a : c.autori) {
-                    stringBuilder.append(a.getNume());
-                    stringBuilder.append(",");
+                for (CarteCuAutor c : carteCuAutorList) {
+                    for (Autor a : c.autori) {
+                        stringBuilder.append(a.getNume());
+                        stringBuilder.append(",");
                     }
                 }
                 tvAutor.setText(stringBuilder.toString());

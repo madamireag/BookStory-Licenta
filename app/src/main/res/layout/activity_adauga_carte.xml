@@ -1,146 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/gradient_background"
-    android:orientation="vertical"
-    tools:context=".activities.AdaugaCarteActivity">
-    <TextView
-        android:id="@+id/tvAdd"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/adauga_o_carte"
-        android:textStyle="bold"/>
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textViewTitle"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/titlu"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        android:orientation="vertical"
+        tools:context=".activities.AdaugaCarteActivity">
 
-    <EditText
-        android:id="@+id/editTextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:hint="@string/introdu_titlul"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        />
-    <TextView
-        android:id="@+id/tvISBN"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/isbn"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"/>
-    <EditText
-        android:id="@+id/etISBN"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:hint="@string/introdu_isbn"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        />
-    <TextView
-        android:id="@+id/tvNrCopii"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/numar_copii_disponibile"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"/>
-    <EditText
-        android:id="@+id/etNrCopii"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:hint="@string/introdu_nr_de_copii_disponibile"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="number"
-        />
-    <TextView
-        android:id="@+id/tvGen"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/gen_carte"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"/>
-    <Spinner
-        android:id="@+id/spinnerGenre"
-        android:layout_width="235dp"
-        android:layout_margin="10dp"
-        android:layout_height="30dp"
-        />
-    <TextView
-        android:id="@+id/tvAutor"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/autori"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"/>
-    <Spinner
-        android:id="@+id/spinnerAutor"
-        android:layout_width="235dp"
-        android:layout_margin="10dp"
-        android:layout_height="30dp"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvAdd"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center_horizontal"
+            android:text="@string/adauga_o_carte"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/titlu"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/introdu_titlul"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvISBN"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/isbn"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etISBN"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/introdu_isbn"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvNrCopii"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/numar_copii_disponibile"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etNrCopii"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/introdu_nr_de_copii_disponibile"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/tvGen"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/gen_carte"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerGenre"
+            android:layout_width="235dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/tvAutor"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/autori"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerAutor"
+            android:layout_width="235dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnAddCoperta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/button_rounded_corners"
+                android:text="@string/add_image" />
+
+            <ImageView
+                android:id="@+id/bookCover"
+                android:layout_width="71dp"
+                android:layout_height="77dp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/btnAddCoperta"
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
+        </RelativeLayout>
 
         <Button
-            android:id="@+id/btnAddCoperta"
+            android:id="@+id/btnSalvare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:background="@drawable/button_rounded_corners"
-            android:text="@string/add_image" />
-
-        <ImageView
-        android:id="@+id/bookCover"
-        android:layout_width="71dp"
-        android:layout_height="77dp"
-        android:layout_toEndOf="@+id/btnAddCoperta"
-        android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
-</RelativeLayout>
-    <Button
-        android:id="@+id/btnSalvare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_rounded_corners"
-        android:text="@string/salvare"
-        />
-</LinearLayout>
+            android:text="@string/salvare" />
+    </LinearLayout>
 </ScrollView>

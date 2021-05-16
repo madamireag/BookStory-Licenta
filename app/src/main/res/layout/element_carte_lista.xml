@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/cardBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerVertical="true">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/cardBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/titlu"
-        android:textStyle="bold"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="74dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true">
 
-    <TextView
-        android:id="@+id/autor"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlu"
-        tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="74dp" />
+        <TextView
+            android:id="@+id/titlu"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="74dp" />
 
-    <TextView
-        android:id="@+id/gen"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autor"
-        tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="74dp" />
+        <TextView
+            android:id="@+id/autor"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titlu"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="74dp" />
 
-    <ImageView
-        android:id="@+id/ivCoperta"
-        android:scaleType="fitCenter"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        android:contentDescription="@string/book" />
+        <TextView
+            android:id="@+id/gen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/ivCoperta"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autor"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="74dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivCoperta"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/book"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_save" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

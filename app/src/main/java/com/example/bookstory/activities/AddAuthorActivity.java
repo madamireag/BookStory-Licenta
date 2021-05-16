@@ -12,11 +12,12 @@ import com.example.bookstory.database.LibraryDB;
 import com.example.bookstory.models.Autor;
 
 public class AddAuthorActivity extends AppCompatActivity {
-     EditText etNumeAutor;
-     Button btnAddAutor;
-     LibraryDB dbInstance;
-     Intent intent;
-     public static final String ADD_AUTOR = "addAutor";
+    EditText etNumeAutor;
+    Button btnAddAutor;
+    LibraryDB dbInstance;
+    Intent intent;
+    public static final String ADD_AUTOR = "addAutor";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +27,11 @@ public class AddAuthorActivity extends AppCompatActivity {
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
         intent = getIntent();
         btnAddAutor.setOnClickListener(v -> {
-        Autor autor = new Autor(etNumeAutor.getText().toString());
-        autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
-        intent.putExtra(ADD_AUTOR, autor);
-        setResult(RESULT_OK, intent);
-        finish();
-       });
+            Autor autor = new Autor(etNumeAutor.getText().toString());
+            autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
+            intent.putExtra(ADD_AUTOR, autor);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 }
