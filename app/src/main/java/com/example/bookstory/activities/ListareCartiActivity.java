@@ -154,6 +154,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                 StringBuilder stringBuilder = new StringBuilder();
                 for(CarteCuAutor c : carteCuAutorList) {
                     for(Autor a : c.autori) {
+
                         stringBuilder.append(a.getNume());
                         stringBuilder.append(",");
                     }
