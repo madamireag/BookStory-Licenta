@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@drawable/gradient_background"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:ignore="ScrollViewCount">
 
-    tools:context=".activities.RecomandariActivity">
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".activities.RecomandariActivity">
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/lvCartiRec"
+            android:layout_width="match_parent"
+            android:layout_height="560dp"
+            tools:ignore="NestedScrolling" />
+
+        <Button
+            android:id="@+id/btnFinalizeazaImprumutRec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_rounded_corners"
+            android:text="@string/finalizeaza_imprumut" />
+
+
+    </LinearLayout>
 </ScrollView>

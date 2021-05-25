@@ -7,7 +7,9 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.example.bookstory.models.AutorCarte;
+import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
+import com.example.bookstory.models.Gen;
 
 import java.util.List;
 
@@ -26,4 +28,7 @@ public interface CarteCuAutoriDao {
 
     @Query("DELETE from AutorCarte where idCarte = :id")
     void deleteBookById(long id);
+
+    @Query("select * from carti where genCarte=:gen")
+    List<CarteCuAutor> getCartiByGenre(Gen gen);
 }
