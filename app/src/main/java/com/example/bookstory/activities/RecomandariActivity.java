@@ -24,7 +24,6 @@ import static java.util.stream.Collectors.groupingBy;
 public class RecomandariActivity extends AppCompatActivity {
     LibraryDB dbInstance;
     List<ImprumutCuCarte> imprumuturiCuCarti = new ArrayList<>();
-    List<Carte> carti;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -37,37 +36,24 @@ public class RecomandariActivity extends AppCompatActivity {
         Map<Gen, List<Carte>> cartiByGenre = new HashMap<>();
         for (ImprumutCuCarte i : imprumuturiCuCarti) {
             for (Carte c : i.listaCartiImprumut) {
-                cartiByGenre = i.listaCartiImprumut.stream()
-                        .collect(groupingBy(Carte::getGenCarte));
-
-
+                cartiByGenre.putAll(i.listaCartiImprumut.stream()
+                        .collect(groupingBy(Carte::getGenCarte)));
             }
+
+
         }
-        Log.i("GRUPARE", cartiByGenre.toString());
-        // parcurgere map + numarare carti per fiecare categorie
+        Log.i("GRUPARE F", cartiByGenre.toString());
+
+        AtomicInteger max = new AtomicInteger();
         cartiByGenre.forEach((k, v) -> {
-            switch (k) {
-                case CLASSIC:
-
-                    break;
-                case FANTASY:
-
-                    break;
-                case FICTION:
-
-                    break;
-                case ROMANCE:
-
-                    break;
-                case SCIENCE:
-
-                    break;
-                case BIOGRAPHY:
-
-                    break;
+            if (v.size() > max.get()) {
+                max.set(v.size());
             }
+            if (v.size() == Integer.parseInt(String.valueOf(max))) {
+                Log.i("CATEG-MAX", k.name());
+            }
+
         });
-        // gasesc categoria cu valoarea maxima
 
 
     }
