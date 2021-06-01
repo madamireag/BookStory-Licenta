@@ -15,6 +15,7 @@ public class DashboardActivity extends AppCompatActivity {
     CardView cvSignOut;
     CardView cvListaCarti;
     CardView cvRecomandari;
+    CardView cvImprumuturi;
     FirebaseAuth auth;
 
     @Override
@@ -42,6 +43,10 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), RecomandariActivity.class);
             startActivity(intent);
         });
+        cvImprumuturi.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), VizualizareImprumuturiActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -50,5 +55,6 @@ public class DashboardActivity extends AppCompatActivity {
         cvSignOut = findViewById(R.id.cvLogout);
         cvListaCarti = findViewById(R.id.cvListaCarti);
         cvRecomandari = findViewById(R.id.cvRecomandari);
+        cvImprumuturi = findViewById(R.id.cvImprumuturi);
     }
 }

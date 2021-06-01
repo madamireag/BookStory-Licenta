@@ -12,14 +12,15 @@ import com.example.bookstory.R;
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> {
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-        startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
 //                Autor autor = new Autor("Mark Manson");
 //                Autor autor1 = new Autor("John Green");
 //                Autor autor2 = new Autor("alt autor");

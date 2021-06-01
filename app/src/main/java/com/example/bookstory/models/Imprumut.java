@@ -12,22 +12,22 @@ public class Imprumut {
     @PrimaryKey(autoGenerate = true)
     private long idImprumut;
     private long idUtilizator;
-    private Date dataReturnare;
+    private Date dataImprumut;
     private Date dataScadenta;
     private double taxaIntarziere;
 
-    public Imprumut(long idImprumut, long idUtilizator, Date dataReturnare, Date dataScadenta, double taxaIntarziere) {
+    public Imprumut(long idImprumut, long idUtilizator, Date dataImprumut, Date dataScadenta, double taxaIntarziere) {
         this.idImprumut = idImprumut;
         this.idUtilizator = idUtilizator;
-        this.dataReturnare = dataReturnare;
+        this.dataImprumut = dataImprumut;
         this.dataScadenta = dataScadenta;
         this.taxaIntarziere = taxaIntarziere;
     }
 
     @Ignore
-    public Imprumut(long idUtilizator, Date dataReturnare, Date dataScadenta, double taxaIntarziere) {
+    public Imprumut(long idUtilizator, Date dataImprumut, Date dataScadenta, double taxaIntarziere) {
         this.idUtilizator = idUtilizator;
-        this.dataReturnare = dataReturnare;
+        this.dataImprumut = dataImprumut;
         this.dataScadenta = dataScadenta;
         this.taxaIntarziere = taxaIntarziere;
     }
@@ -48,12 +48,12 @@ public class Imprumut {
         this.idUtilizator = idUtilizator;
     }
 
-    public Date getDataReturnare() {
-        return dataReturnare;
+    public Date getDataImprumut() {
+        return dataImprumut;
     }
 
-    public void setDataReturnare(Date dataReturnare) {
-        this.dataReturnare = dataReturnare;
+    public void setDataImprumut(Date dataImprumut) {
+        this.dataImprumut = dataImprumut;
     }
 
     public Date getDataScadenta() {

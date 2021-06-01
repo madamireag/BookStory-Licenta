@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout layout;
     public final String ADMIN_EMAIL = "admin@test.com";
     public final String ADMIN_PASS = "ComplicatedAdminPass1234";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,30 +32,30 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         btnLogin.setOnClickListener(v -> loginUser());
         btnRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
         });
 
     }
 
     private void loginUser() {
-        auth.signInWithEmailAndPassword(etEmail.getText().toString(),etPassword.getText()
+        auth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText()
                 .toString()).addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
-                        if(ADMIN_EMAIL.equals(etEmail.getText().toString()) && ADMIN_PASS.equals(etPassword.getText().toString())){
-                            Intent intent = new Intent(getApplicationContext(), AdminDashboardActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                            startActivity(intent);
-                        }
-                    } else {
-                        Log.i("EROARE-LOGIN",task.getException().toString());
-                        Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
-                        Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(e -> Snackbar.make(layout, e.getMessage(), Snackbar.LENGTH_LONG).show());
+            if (task.isSuccessful()) {
+                Toast.makeText(getApplicationContext(), R.string.login_successfull, Toast.LENGTH_LONG).show();
+                if (ADMIN_EMAIL.equals(etEmail.getText().toString()) && ADMIN_PASS.equals(etPassword.getText().toString())) {
+                    Intent intent = new Intent(getApplicationContext(), AdminDashboardActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                    startActivity(intent);
+                }
+            } else {
+                Log.i("EROARE-LOGIN", task.getException().toString());
+                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+                Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(e -> Snackbar.make(layout, e.getMessage(), Snackbar.LENGTH_LONG).show());
     }
 
     private void initializeUI() {
