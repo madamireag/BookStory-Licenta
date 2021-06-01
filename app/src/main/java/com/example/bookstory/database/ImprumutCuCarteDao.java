@@ -19,8 +19,8 @@ public interface ImprumutCuCarteDao {
     void insert(ImprumutCarte ic);
 
     @Transaction
-    @Query("SELECT * FROM imprumuturi")
-    List<ImprumutCuCarte> getImprumutcuCarti();
+    @Query("SELECT * FROM imprumuturi where idUtilizator = :id")
+    List<ImprumutCuCarte> getImprumutcuCarti(long id);
 
 
 }

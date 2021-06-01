@@ -121,7 +121,8 @@
                 android:layout_height="77dp"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/btnAddCoperta"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:contentDescription="@string/cover" />
         </RelativeLayout>
 
         <Button

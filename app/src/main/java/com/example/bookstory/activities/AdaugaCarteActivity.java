@@ -65,7 +65,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
                 if (isUpdate) {
                     carte.setId((int) editBookId);
                     dbInstance.getCartiDao().update(carte);
-                } else if (!isUpdate) {
+                } else {
                     carte.setId((int) dbInstance.getCartiDao().insert(carte));
                 }
 
@@ -109,9 +109,11 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri contentUri = data.getData();
-            this.bookCoverUri = contentUri;
-            this.imageView.setImageURI(contentUri);
+            if (data != null) {
+                Uri contentUri = data.getData();
+                this.bookCoverUri = contentUri;
+                this.imageView.setImageURI(contentUri);
+            }
         }
     }
 }

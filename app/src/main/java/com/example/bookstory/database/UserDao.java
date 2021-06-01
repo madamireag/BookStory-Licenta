@@ -20,4 +20,6 @@ public interface UserDao {
     @Query("select * from utilizatori where uid=:uid")
     Utilizator getUserByUid(String uid);
 
+
+
 }

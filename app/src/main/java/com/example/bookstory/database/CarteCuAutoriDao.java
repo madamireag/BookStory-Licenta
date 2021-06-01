@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.example.bookstory.models.AutorCarte;
-import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
 import com.example.bookstory.models.Gen;
 

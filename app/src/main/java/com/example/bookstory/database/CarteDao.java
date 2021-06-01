@@ -7,9 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.bookstory.models.Carte;
-import com.example.bookstory.models.Gen;
-
-import java.util.List;
 
 @Dao
 public interface CarteDao {
@@ -23,7 +20,7 @@ public interface CarteDao {
     void deleteBook(Carte c);
 
     @Update
-    int update(Carte c);
+    void update(Carte c);
 
 
 }

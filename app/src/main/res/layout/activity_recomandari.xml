@@ -7,16 +7,28 @@
     android:orientation="vertical"
     tools:ignore="ScrollViewCount">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".activities.RecomandariActivity">
 
+        <TextView
+            android:id="@+id/tvRec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/recomandarile_noastre"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
         <ListView
             android:id="@+id/lvCartiRec"
             android:layout_width="match_parent"
             android:layout_height="560dp"
+            android:divider="@null"
+            android:dividerHeight="-10dp"
             tools:ignore="NestedScrolling" />
 
         <Button

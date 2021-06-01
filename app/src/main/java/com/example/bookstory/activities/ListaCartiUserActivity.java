@@ -147,22 +147,19 @@ public class ListaCartiUserActivity extends AppCompatActivity {
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView tvAutor = view.findViewById(R.id.autor);
-                StringBuilder stringBuilder = null;
+                StringBuilder stringBuilder;
                 Uri uri = Uri.parse(carti.get(position).getCopertaURI());
                 ImageView iv = view.findViewById(R.id.ivCoperta);
                 iv.setImageURI(uri);
 
-                //for (CarteCuAutor c : carteCuAutorList) {
-
-                    stringBuilder = new StringBuilder();
-                    for (Autor a : carteCuAutorList.get(position).autori) {
-                        stringBuilder.append(a.getNume());
+                stringBuilder = new StringBuilder();
+                for (Autor a : carteCuAutorList.get(position).autori) {
+                    stringBuilder.append(a.getNume());
+                    if (carteCuAutorList.get(position).autori.indexOf(a) != (carteCuAutorList.get(position).autori.size() - 1)) {
                         stringBuilder.append(",");
                     }
-
-                    tvAutor.setText(stringBuilder.toString());
-               // }
-
+                }
+                tvAutor.setText(stringBuilder.toString());
                 return view;
             }
         };
