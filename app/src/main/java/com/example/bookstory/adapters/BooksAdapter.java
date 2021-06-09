@@ -25,8 +25,9 @@ public class BooksAdapter extends ArrayAdapter<Carte> {
     private Context context;
     private int resource;
     private List<Carte> booksList;
+
     public BooksAdapter(@NonNull Context context, int resource, List<Carte> booksList, LayoutInflater layoutInflater) {
-        super(context, resource,booksList);
+        super(context, resource, booksList);
         this.context = context;
         this.resource = resource;
         this.layoutInflater = layoutInflater;
@@ -38,10 +39,9 @@ public class BooksAdapter extends ArrayAdapter<Carte> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = layoutInflater.inflate(resource, parent, false);
         Carte carte = booksList.get(position);
-        if(carte!=null){
+        if (carte != null) {
             TextView tvTitlu = view.findViewById(R.id.titlu);
             tvTitlu.setText(carte.getTitlu());
-            TextView tvAutor = view.findViewById(R.id.autor);
             TextView tvGen = view.findViewById(R.id.gen);
             tvGen.setText(String.valueOf(carte.getGenCarte()));
             ImageView cover = view.findViewById(R.id.ivCoperta);

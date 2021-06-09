@@ -1,15 +1,14 @@
 package com.example.bookstory.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookstory.R;
 import com.example.bookstory.adapters.ImprumutAdapter;
@@ -38,12 +37,16 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvImprumuturi);
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
         auth = FirebaseAuth.getInstance();
-        Utilizator utilizator = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
-        // imprumuturi = dbInstance.getImprumutDao().getAllImprumuturiForUser(utilizator.getId());
+        Utilizator utilizator = null;
+        if (auth.getCurrentUser() != null) {
+            utilizator = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
+        }
         imprumutCuCarteList = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
-        for (ImprumutCuCarte ic : imprumutCuCarteList) {
-            if (ic.imprumut.getIdUtilizator() == utilizator.getId()) {
-                imprumuturi.add(ic.imprumut);
+        if (utilizator != null) {
+            for (ImprumutCuCarte ic : imprumutCuCarteList) {
+                if (ic.imprumut.getIdUtilizator() == utilizator.getId()) {
+                    imprumuturi.add(ic.imprumut);
+                }
             }
         }
         ImprumutAdapter adapter = new ImprumutAdapter(getApplicationContext(), R.layout.element_imprumut, imprumuturi, getLayoutInflater()) {
@@ -51,18 +54,16 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                List<String> bookTitles = new ArrayList<>();
                 StringBuilder stringBuilder;
                 TextView tvCartiImprumut = view.findViewById(R.id.tvCartiImprumut);
                 stringBuilder = new StringBuilder();
                 for (Carte c : imprumutCuCarteList.get(position).listaCartiImprumut) {
                     stringBuilder.append(c.getTitlu());
                     if (imprumutCuCarteList.get(position).listaCartiImprumut.indexOf(c) != (imprumutCuCarteList.get(position).listaCartiImprumut.size() - 1)) {
-                        stringBuilder.append(",");
+                        stringBuilder.append(System.lineSeparator());
                     }
                 }
                 tvCartiImprumut.setText(stringBuilder.toString());
-
                 return view;
             }
         };

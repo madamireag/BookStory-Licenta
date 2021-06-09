@@ -16,6 +16,7 @@ import com.example.bookstory.models.Imprumut;
 import java.util.List;
 
 public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
+    
     private List<Imprumut> imprumuturi;
     private LayoutInflater layoutInflater;
     private Context context;
@@ -34,7 +35,7 @@ public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = layoutInflater.inflate(resource, parent, false);
         Imprumut imprumut = imprumuturi.get(position);
-        if(imprumut != null){
+        if (imprumut != null) {
             TextView tvDataImprumut = view.findViewById(R.id.tvDataImprumut);
             tvDataImprumut.setText(String.valueOf(imprumut.getDataImprumut()));
             TextView tvDataScadenta = view.findViewById(R.id.tvDataScadenta);

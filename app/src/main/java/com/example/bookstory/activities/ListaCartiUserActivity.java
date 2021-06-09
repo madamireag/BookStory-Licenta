@@ -2,8 +2,16 @@ package com.example.bookstory.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +29,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.bookstory.R;
 import com.example.bookstory.adapters.BooksAdapter;
@@ -33,21 +43,27 @@ import com.example.bookstory.models.ImprumutCarte;
 import com.example.bookstory.models.Utilizator;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 
 public class ListaCartiUserActivity extends AppCompatActivity {
-
+    private static final int PERMISSION_REQUEST_CODE = 200;
+    private FirebaseAuth auth;
+    private LibraryDB db;
     ListView listView;
-    LibraryDB db;
     Button btnFinalizeaza;
-    List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
+    private List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
     List<Carte> carti = new ArrayList<>();
     List<Carte> cartiImprumutate = new ArrayList<>();
-    FirebaseAuth auth;
 
 
     @Override
@@ -80,6 +96,10 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                             ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(), c.getIdCarte());
                             db.getImprumutCuCarteDao().insert(imprumutCarte);
                         }
+                        if (!checkPermission()) {
+                            requestPermission();
+                        }
+                        genereazaFisaImprumut(imprumut);
                         Toast.makeText(getApplicationContext(), R.string.imprumut_finalizat_toast, Toast.LENGTH_LONG).show();
                         dialogInterface.cancel();
 
@@ -166,5 +186,58 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    private void genereazaFisaImprumut(Imprumut imprumut) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        PdfDocument document = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(width, height, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        Paint title = new Paint();
+        title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        title.setTextSize(15);
+        title.setColor(ContextCompat.getColor(this, R.color.black));
+        canvas.drawText("Fisa imprumut la data de " + imprumut.getDataImprumut().toString(), 209, 100, title);
+        canvas.drawText("Data: " + imprumut.getDataImprumut().toString(), 100, 100, title);
+        document.finishPage(page);
+        try {
+            String numePDF = "Imprumut" + imprumut.getDataImprumut().toString()+".pdf";
+            File f = new File(Environment.getExternalStorageDirectory(), numePDF);
+            document.writeTo(new FileOutputStream(f));
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Log.e("main", "error " + e.toString());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+        document.close();
+    }
 
+    private boolean checkPermission() {
+        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                if (writeStorage && readStorage) {
+                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
+    }
 }

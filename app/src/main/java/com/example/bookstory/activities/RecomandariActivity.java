@@ -41,6 +41,7 @@ public class RecomandariActivity extends AppCompatActivity {
     List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
     ListView listView;
     FirebaseAuth auth;
+    boolean isNewUser;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -54,14 +55,17 @@ public class RecomandariActivity extends AppCompatActivity {
         Utilizator user = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
         if (user != null) {
             imprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCarti(user.getId());
+            if (imprumuturiCuCarti.isEmpty()) {
+                isNewUser = true;
+                imprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
+            }
         }
 
         Map<Gen, List<Carte>> cartiByGenre = new HashMap<>();
         for (ImprumutCuCarte i : imprumuturiCuCarti) {
-            // for (Carte c : i.listaCartiImprumut) {
             cartiByGenre.putAll(i.listaCartiImprumut.stream()
                     .collect(groupingBy(Carte::getGenCarte)));
-            //   }
+
         }
         Log.i("GRUPARE F", cartiByGenre.toString());
 
@@ -80,10 +84,25 @@ public class RecomandariActivity extends AppCompatActivity {
 
     }
 
-    public void listareCarti() {
+    public void verificaImprumutAnteriorCarte() {
         for (CarteCuAutor ca : carteCuAutorList) {
-            carti.add(ca.carte);
+            for (ImprumutCuCarte ic : imprumuturiCuCarti) {
+                if (!ic.listaCartiImprumut.contains(ca.carte) && !carti.contains(ca.carte)) {
+                    carti.add(ca.carte);
+                }
+            }
         }
+    }
+
+    public void listareCarti() {
+        if (!isNewUser) { // nu merge bine, mai vedem csf
+            verificaImprumutAnteriorCarte();
+        } else {
+            for (CarteCuAutor ca : carteCuAutorList) {
+                carti.add(ca.carte);
+            }
+        }
+
         BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, carti, getLayoutInflater()) {
             @NonNull
             @Override
@@ -96,14 +115,18 @@ public class RecomandariActivity extends AppCompatActivity {
                 iv.setImageURI(uri);
 
                 stringBuilder = new StringBuilder();
-                for (Autor a : carteCuAutorList.get(position).autori) {
-                    stringBuilder.append(a.getNume());
-                    if (carteCuAutorList.get(position).autori.indexOf(a) != (carteCuAutorList.get(position).autori.size() - 1)) {
-                        stringBuilder.append(",");
-                    }
+                try {
+                    for (Autor a : carteCuAutorList.get(position).autori) {
+                        stringBuilder.append(a.getNume());
+                        if (carteCuAutorList.get(position).autori.indexOf(a) != (carteCuAutorList.get(position).autori.size() - 1)) {
+                            stringBuilder.append(",");
+                        }
 
+                    }
+                    tvAutor.setText(stringBuilder.toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                tvAutor.setText(stringBuilder.toString());
                 return view;
             }
         };

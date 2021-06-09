@@ -2,6 +2,7 @@ package com.example.bookstory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CalendarView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -16,6 +17,7 @@ public class DashboardActivity extends AppCompatActivity {
     CardView cvListaCarti;
     CardView cvRecomandari;
     CardView cvImprumuturi;
+    CardView cardView;
     FirebaseAuth auth;
 
     @Override
@@ -47,6 +49,10 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), VizualizareImprumuturiActivity.class);
             startActivity(intent);
         });
+        cardView.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), FisaImprumutActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -56,5 +62,6 @@ public class DashboardActivity extends AppCompatActivity {
         cvListaCarti = findViewById(R.id.cvListaCarti);
         cvRecomandari = findViewById(R.id.cvRecomandari);
         cvImprumuturi = findViewById(R.id.cvImprumuturi);
+        cardView = findViewById(R.id.cvCeva);
     }
 }
