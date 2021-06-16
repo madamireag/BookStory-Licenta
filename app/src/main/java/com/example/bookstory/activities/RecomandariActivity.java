@@ -41,7 +41,7 @@ public class RecomandariActivity extends AppCompatActivity {
     List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
     ListView listView;
     FirebaseAuth auth;
-    boolean isNewUser;
+    boolean isNewUser = true;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -56,8 +56,9 @@ public class RecomandariActivity extends AppCompatActivity {
         if (user != null) {
             imprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCarti(user.getId());
             if (imprumuturiCuCarti.isEmpty()) {
-                isNewUser = true;
                 imprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
+            } else {
+                isNewUser = false;
             }
         }
 
@@ -80,8 +81,14 @@ public class RecomandariActivity extends AppCompatActivity {
             }
 
         });
-        listareCarti();
+       // listareCarti();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        listareCarti();
     }
 
     public void verificaImprumutAnteriorCarte() {
@@ -95,7 +102,9 @@ public class RecomandariActivity extends AppCompatActivity {
     }
 
     public void listareCarti() {
-        if (!isNewUser) { // nu merge bine, mai vedem csf
+        Log.i("NEWUSER", "Ce ai frateee?");
+        Log.i("NEWUSER",  String.valueOf(isNewUser));
+        if (isNewUser) { // nu merge bine, mai vedem csf
             verificaImprumutAnteriorCarte();
         } else {
             for (CarteCuAutor ca : carteCuAutorList) {
