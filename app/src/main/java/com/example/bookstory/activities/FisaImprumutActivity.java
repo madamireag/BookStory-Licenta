@@ -50,7 +50,6 @@ public class FisaImprumutActivity extends AppCompatActivity {
             requestPermission();
         }
 
-        // vezi ce vrea cu permisiunile ???
         try {
             File f = new File(Environment.getExternalStorageDirectory() ,"PDF-generat.pdf");
             Log.i("DIRECTOR-FISIERE",Environment.getExternalStorageDirectory().toString());
