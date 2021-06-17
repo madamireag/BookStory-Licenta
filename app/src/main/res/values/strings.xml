@@ -82,6 +82,11 @@
     <string name="choose_app">Choose Mail App</string>
     <string name="my_email">mireagmadalina@yahoo.com</string>
     <string name="contact">Contact</string>
+    <string name="mesaj_err_parola_empty">Trebuie introdusa parola!</string>
+    <string name="format_invalid_email">Format email invalid!</string>
+    <string name="mesaj_err_email_empty">Trebuie sa introduceti adresa de email!</string>
+    <string name="mesaj_date_conectare_invalide">Date de conectare invalide! Introduceti datele corecte</string>
+    <string name="istoric_imprumuturi">Istoric imprumuturi</string>
     <string-array name="add_book_genre">
         <item>FICTION</item>
         <item>ROMANCE</item>

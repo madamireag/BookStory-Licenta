@@ -30,20 +30,13 @@
         android:hint="@string/password"
         android:inputType="textPassword" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etPasswordLogin"
-        android:text="@string/remember_me" />
-
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/etPasswordLogin"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button_rounded_corners"
         android:drawableEnd="@drawable/ic_baseline_login_24"
         android:text="@string/login" />
@@ -52,9 +45,9 @@
         android:id="@+id/btnRegister"
         android:layout_width="119dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
+        android:layout_below="@+id/etPasswordLogin"
         android:layout_marginStart="190dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:layout_toEndOf="@+id/btnLogin"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/register" />

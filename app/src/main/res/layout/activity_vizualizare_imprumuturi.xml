@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:orientation="vertical"
+
     tools:context=".activities.VizualizareImprumuturiActivity">
+
+
+    <TextView
+        android:id="@+id/tvImprumuturi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        android:textSize="14sp"
+        android:fontFamily="@font/amarante"
+        android:text="@string/istoric_imprumuturi" />
 
     <ListView
         android:id="@+id/lvImprumuturi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+     />
 
 </LinearLayout>

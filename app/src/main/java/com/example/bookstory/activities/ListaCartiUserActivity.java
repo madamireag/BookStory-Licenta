@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,6 +51,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -70,6 +74,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     List<Carte> cartiImprumutate = new ArrayList<>();
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,15 +99,8 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
                         calendar.add(Calendar.DATE, 14);
-                        Locale locale = new Locale("ro", "RO");
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy",locale);
-                        Date dataCurenta = null;
-                        try {
-                            dataCurenta = sdf.parse(new Date().toString());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        Imprumut imprumut = new Imprumut(utilizator.getId(), dataCurenta, calendar.getTime(), 0);
+                        Date data = new Date();
+                        Imprumut imprumut = new Imprumut(utilizator.getId(), data, calendar.getTime(), 0);
                         imprumut.setIdImprumut(db.getImprumutDao().insert(imprumut));
                         for (Carte c : cartiImprumutate) {
                             ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(), c.getIdCarte());
@@ -199,6 +197,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void genereazaFisaImprumut(Imprumut imprumut, ImprumutCuCarte ic) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -211,18 +210,32 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         Paint paint = new Paint();
         Paint title = new Paint();
         title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        title.setTextSize(23);
+        title.setTextSize(25);
         title.setColor(ContextCompat.getColor(this, R.color.black));
-        String dataTitlu;
-        dataTitlu = String.valueOf(imprumut.getDataImprumut().getDay()) + "-" + String.valueOf(imprumut.getDataImprumut().getMonth()) + "-" + String.valueOf(imprumut.getDataImprumut().getYear());
-        int y = 100;
-        int x = Math.round(width / 2);
-        canvas.drawText("Fisa imprumut la data de " + dataTitlu, x, y, title);
+        title.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(23);
+       paint.setTextAlign(Paint.Align.LEFT);
 
+        int y = 100;
+        int x = 400;
+        LocalDate localDate = imprumut.getDataImprumut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year  = localDate.getYear();
+        int month = localDate.getMonthValue();
+        int day   = localDate.getDayOfMonth();
+        canvas.drawText("Fisa imprumut la data de "+ day + "-"+month + "-"+ year, x, y, title);
+        x = 20;
+        y+=100;
+        canvas.drawText("Au fost rezervate pentru imprumut urmatoarele carti:" + System.lineSeparator(), x, y, paint);
         for (Carte c : ic.listaCartiImprumut) {
-            y += 20;
+            y += 30;
             canvas.drawText(c.getTitlu() + System.lineSeparator(), x, y, paint);
         }
+        y += 50;
+        LocalDate localDate2 = imprumut.getDataScadenta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year2  = localDate2.getYear();
+        int month2 = localDate2.getMonthValue();
+        int day2   = localDate2.getDayOfMonth();
+        canvas.drawText("Data scadenta este: " + day2 + "-"+month2 + "-"+ year2, x, y, paint);
         document.finishPage(page);
         try {
             String numePDF = "Imprumut" + imprumut.getDataImprumut().toString() + ".pdf";
