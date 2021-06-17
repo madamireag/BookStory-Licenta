@@ -49,15 +49,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -86,6 +83,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         carteCuAutorList = db.getCarteCuAutoriDao().getCarteCuAutori();
         listareCarti();
         registerForContextMenu(listView);
+
         btnFinalizeaza.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(ListaCartiUserActivity.this)
                     .setTitle(R.string.confirmare_finalizare)
@@ -95,25 +93,26 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                         dialogInterface.cancel();
                     })
                     .setPositiveButton("Da", (dialogInterface, which) -> {
-                        Utilizator utilizator = db.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(new Date());
-                        calendar.add(Calendar.DATE, 14);
-                        Date data = new Date();
-                        Imprumut imprumut = new Imprumut(utilizator.getId(), data, calendar.getTime(), 0);
-                        imprumut.setIdImprumut(db.getImprumutDao().insert(imprumut));
-                        for (Carte c : cartiImprumutate) {
-                            ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(), c.getIdCarte());
-                            db.getImprumutCuCarteDao().insert(imprumutCarte);
+                        if (auth.getCurrentUser() != null) {
+                            Utilizator utilizator = db.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(new Date());
+                            calendar.add(Calendar.DATE, 14);
+                            Date data = new Date();
+                            Imprumut imprumut = new Imprumut(utilizator.getId(), data, calendar.getTime(), 0);
+                            imprumut.setIdImprumut(db.getImprumutDao().insert(imprumut));
+                            for (Carte c : cartiImprumutate) {
+                                ImprumutCarte imprumutCarte = new ImprumutCarte(imprumut.getIdImprumut(), c.getIdCarte());
+                                db.getImprumutCuCarteDao().insert(imprumutCarte);
+                            }
+                            if (!checkPermission()) {
+                                requestPermission();
+                            }
+                            ImprumutCuCarte ic = db.getImprumutCuCarteDao().getImprumutcuCartiByImprumutId(imprumut.getIdImprumut());
+                            genereazaFisaImprumut(imprumut, ic);
+                            Toast.makeText(getApplicationContext(), R.string.imprumut_finalizat_toast, Toast.LENGTH_LONG).show();
+                            dialogInterface.cancel();
                         }
-                        if (!checkPermission()) {
-                            requestPermission();
-                        }
-                        ImprumutCuCarte ic = db.getImprumutCuCarteDao().getImprumutcuCartiByImprumutId(imprumut.getIdImprumut());
-                        genereazaFisaImprumut(imprumut, ic);
-                        Toast.makeText(getApplicationContext(), R.string.imprumut_finalizat_toast, Toast.LENGTH_LONG).show();
-                        dialogInterface.cancel();
-
                     }).create();
             dialog.show();
         });
@@ -197,8 +196,10 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void genereazaFisaImprumut(Imprumut imprumut, ImprumutCuCarte ic) {
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -207,35 +208,45 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(width, height, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
-        Paint paint = new Paint();
+
         Paint title = new Paint();
         title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        title.setTextSize(25);
+        title.setTextSize(31);
         title.setColor(ContextCompat.getColor(this, R.color.black));
         title.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(23);
-       paint.setTextAlign(Paint.Align.LEFT);
+        Paint paint = new Paint();
+        paint.setTextSize(28);
+        paint.setTextAlign(Paint.Align.LEFT);
 
         int y = 100;
-        int x = 400;
+        int x = 460;
         LocalDate localDate = imprumut.getDataImprumut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int year  = localDate.getYear();
+        int year = localDate.getYear();
         int month = localDate.getMonthValue();
-        int day   = localDate.getDayOfMonth();
-        canvas.drawText("Fisa imprumut la data de "+ day + "-"+month + "-"+ year, x, y, title);
+        int day = localDate.getDayOfMonth();
+        canvas.drawText("Fisa imprumut la data de " + day + "-" + month + "-" + year, x, y, title);
         x = 20;
-        y+=100;
+        y += 100;
+        String numeMembru = null;
+        if (auth.getCurrentUser() != null) {
+            numeMembru = auth.getCurrentUser().getDisplayName();
+        }
+
+        canvas.drawText("Nume membru: " + numeMembru, x, y, paint);
+        y += 50;
         canvas.drawText("Au fost rezervate pentru imprumut urmatoarele carti:" + System.lineSeparator(), x, y, paint);
         for (Carte c : ic.listaCartiImprumut) {
-            y += 30;
+            y += 50;
             canvas.drawText(c.getTitlu() + System.lineSeparator(), x, y, paint);
         }
         y += 50;
         LocalDate localDate2 = imprumut.getDataScadenta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int year2  = localDate2.getYear();
+        int year2 = localDate2.getYear();
         int month2 = localDate2.getMonthValue();
-        int day2   = localDate2.getDayOfMonth();
-        canvas.drawText("Data scadenta este: " + day2 + "-"+month2 + "-"+ year2, x, y, paint);
+        int day2 = localDate2.getDayOfMonth();
+        canvas.drawText("Data returnarii este: " + day2 + "-" + month2 + "-" + year2, x, y, paint);
+        String mesajTaxa = "In cazul depasirii termenului se va percepe o taxa stabilita in momentul predarii";
+        canvas.drawText(mesajTaxa + System.lineSeparator(), x, y + 50, paint);
         document.finishPage(page);
         try {
             String numePDF = "Imprumut" + imprumut.getDataImprumut().toString() + ".pdf";

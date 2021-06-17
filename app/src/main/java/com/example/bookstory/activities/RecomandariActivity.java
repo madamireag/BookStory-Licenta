@@ -102,9 +102,7 @@ public class RecomandariActivity extends AppCompatActivity {
     }
 
     public void listareCarti() {
-        Log.i("NEWUSER", "Ce ai frateee?");
-        Log.i("NEWUSER",  String.valueOf(isNewUser));
-        if (isNewUser) { // nu merge bine, mai vedem csf
+        if (isNewUser) {
             verificaImprumutAnteriorCarte();
         } else {
             for (CarteCuAutor ca : carteCuAutorList) {
