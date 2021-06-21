@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".activities.ListaCartiUserActivity">
+
+    <ListView
+        android:id="@+id/lvCartiUser"
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        tools:ignore="NestedScrolling" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_background"
-        android:orientation="vertical"
-        tools:context=".activities.ListaCartiUserActivity">
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/lvCartiUser"
-            android:layout_width="match_parent"
-            android:layout_height="560dp"
-            tools:ignore="NestedScrolling" />
+        <Space
+            android:layout_width="300dp"
+            android:layout_height="match_parent" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnFinalizeazaImprumut"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="440dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/teal_700"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_rounded_corners"
-            android:text="@string/finalizeaza_imprumut" />
+            android:tint="@android:color/background_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_done_24" />
+
 
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

@@ -161,13 +161,18 @@ public class ListareCartiActivity extends AppCompatActivity {
                 iv.setImageURI(uri);
 
                 stringBuilder = new StringBuilder();
-                for (Autor a : carteCuAutorList.get(position).autori) {
-                    stringBuilder.append(a.getNume());
-                    if (carteCuAutorList.get(position).autori.indexOf(a) != (carteCuAutorList.get(position).autori.size() - 1)) {
-                        stringBuilder.append(",");
+                try {
+                    for (Autor a : carteCuAutorList.get(position).autori) {
+                        stringBuilder.append(a.getNume());
+                        if (carteCuAutorList.get(position).autori.indexOf(a) != (carteCuAutorList.get(position).autori.size() - 1)) {
+                            stringBuilder.append(",");
+                        }
                     }
+                    tvAutor.setText(stringBuilder.toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                tvAutor.setText(stringBuilder.toString());
+
                 return view;
             }
         };

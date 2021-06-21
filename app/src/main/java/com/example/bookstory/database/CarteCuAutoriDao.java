@@ -22,6 +22,10 @@ public interface CarteCuAutoriDao {
     List<CarteCuAutor> getCarteCuAutori();
 
     @Transaction
+    @Query("SELECT * FROM carti where idCarte=:idCarte")
+    List<CarteCuAutor> getCarteCuAutoriById(long idCarte);
+
+    @Transaction
     @Query("SELECT * FROM carti where titlu like '%' || :title || '%'")
     List<CarteCuAutor> getCarteCuAutoriByName(String title);
 
@@ -30,4 +34,7 @@ public interface CarteCuAutoriDao {
 
     @Query("select * from carti where genCarte=:gen")
     List<CarteCuAutor> getCartiByGenre(Gen gen);
+
+
+
 }

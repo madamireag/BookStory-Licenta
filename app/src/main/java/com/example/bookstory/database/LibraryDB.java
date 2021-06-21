@@ -44,6 +44,8 @@ public abstract class LibraryDB extends RoomDatabase {
     public abstract ImprumutDao getImprumutDao();
 
     public abstract ImprumutCuCarteDao getImprumutCuCarteDao();
+
+    public abstract AutorCuCartiDao getAutorCuCartiDao();
 }
 
 

@@ -44,6 +44,7 @@ import com.example.bookstory.models.Imprumut;
 import com.example.bookstory.models.ImprumutCarte;
 import com.example.bookstory.models.ImprumutCuCarte;
 import com.example.bookstory.models.Utilizator;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -65,7 +66,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private LibraryDB db;
     ListView listView;
-    Button btnFinalizeaza;
+    FloatingActionButton btnFinalizeaza;
     private List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
     List<Carte> carti = new ArrayList<>();
     List<Carte> cartiImprumutate = new ArrayList<>();
@@ -234,7 +235,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
 
         canvas.drawText("Nume membru: " + numeMembru, x, y, paint);
         y += 50;
-        canvas.drawText("Au fost rezervate pentru imprumut urmatoarele carti:" + System.lineSeparator(), x, y, paint);
+        canvas.drawText("Au fost rezervate pentru imprumut urmatoarele listaCartiDeAfisat:" + System.lineSeparator(), x, y, paint);
         for (Carte c : ic.listaCartiImprumut) {
             y += 50;
             canvas.drawText(c.getTitlu() + System.lineSeparator(), x, y, paint);

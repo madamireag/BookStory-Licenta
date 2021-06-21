@@ -21,6 +21,9 @@ public interface ImprumutDao {
     @Query("SELECT * FROM imprumuturi")
     List<Imprumut> getAll();
 
+    @Query("delete from imprumuturi")
+    void deleteAll();
+
     @Delete
     void delete(Imprumut i);
 

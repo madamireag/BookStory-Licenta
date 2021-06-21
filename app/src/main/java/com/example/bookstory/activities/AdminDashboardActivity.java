@@ -70,6 +70,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+       db.getImprumutDao().deleteAll();
     }
 
     private void initializeUI() {

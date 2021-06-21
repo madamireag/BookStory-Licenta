@@ -20,4 +20,7 @@ public interface AutorDao {
     @Query("select * from autori")
     List<Autor> getAll();
 
+    @Query("select * from autori where nume=:numeAutor")
+    List<Autor> getAllByName(String numeAutor);
+
 }
