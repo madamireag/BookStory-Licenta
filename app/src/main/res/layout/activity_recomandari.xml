@@ -20,7 +20,7 @@
     <ListView
         android:id="@+id/lvCartiRec"
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="490dp"
         android:divider="@null"
         android:dividerHeight="-10dp"
         tools:ignore="NestedScrolling" />

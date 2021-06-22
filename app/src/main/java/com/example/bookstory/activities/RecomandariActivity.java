@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,17 +36,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.stream.Collectors.groupingBy;
 
 public class RecomandariActivity extends AppCompatActivity {
+
     private LibraryDB dbInstance;
     private List<ImprumutCuCarte> listaImprumuturiCuCarti = new ArrayList<>();
     List<Carte> listaCartiDeAfisat = new ArrayList<>();
     private List<CarteCuAutor> listaCartiCuAutori = new ArrayList<>();
     private ListView listView;
     FirebaseAuth auth;
-
+    List<CarteCuAutor> cartiDePastrat = new ArrayList<>();
     List<AutorCuCarte> autorCuCarti = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -67,11 +71,10 @@ public class RecomandariActivity extends AppCompatActivity {
             }
         }
 
-
-        // getAutoriFavoriti();
-        listaCartiDeAfisat.clear();
-        listaCartiCuAutori.clear();
+        curataListe();
         recomandaCartiDupaGen();
+        listareCarti();
+        // getAutoriFavoriti();
 
 
     }
@@ -79,17 +82,12 @@ public class RecomandariActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        listareCarti();
+
     }
 
-    public void verificaImprumutAnteriorCarte() {
-        for (CarteCuAutor ca : listaCartiCuAutori) {
-            for (ImprumutCuCarte ic : listaImprumuturiCuCarti) {
-                if (!ic.listaCartiImprumut.contains(ca.carte)) {
-                    listaCartiDeAfisat.add(ca.carte);
-                }
-            }
-        }
+    private void curataListe() {
+        listaCartiDeAfisat.clear();
+        listaCartiCuAutori.clear();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -112,7 +110,8 @@ public class RecomandariActivity extends AppCompatActivity {
         });
     }
 
-    public void listareCarti() {
+    private void verificaImprumutAnteriorCarti() {
+
         boolean found;
         for (CarteCuAutor ca : listaCartiCuAutori) {
             found = false;
@@ -126,8 +125,15 @@ public class RecomandariActivity extends AppCompatActivity {
             }
             if (!found) {
                 listaCartiDeAfisat.add(ca.carte);
+                cartiDePastrat.add(ca);
             }
         }
+
+
+    }
+
+    public void listareCarti() {
+        verificaImprumutAnteriorCarti();
 
         BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, listaCartiDeAfisat, getLayoutInflater()) {
             @NonNull
@@ -142,9 +148,9 @@ public class RecomandariActivity extends AppCompatActivity {
 
                 stringBuilder = new StringBuilder();
                 try {
-                    for (Autor a : listaCartiCuAutori.get(position).autori) {
+                    for (Autor a : cartiDePastrat.get(position).autori) {
                         stringBuilder.append(a.getNume());
-                        if (listaCartiCuAutori.get(position).autori.indexOf(a) != (listaCartiCuAutori.get(position).autori.size() - 1)) {
+                        if (cartiDePastrat.get(position).autori.indexOf(a) != (cartiDePastrat.get(position).autori.size() - 1)) {
                             stringBuilder.append(",");
                         }
 
@@ -161,42 +167,44 @@ public class RecomandariActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getAutoriFavoriti() {
-        listaCartiCuAutori.clear();
+        curataListe();
         for (ImprumutCuCarte ic : listaImprumuturiCuCarti) {
             for (Carte c : ic.listaCartiImprumut) {
                 listaCartiCuAutori.addAll(dbInstance.getCarteCuAutoriDao().getCarteCuAutoriById(c.getIdCarte()));
             }
         }
         int contor = 0;
-        Map<Autor, Integer> autoriContor = new HashMap<>();
+        Map<String, Integer> autoriContor = new HashMap<>();
         for (CarteCuAutor ca : listaCartiCuAutori) {
             for (Autor a : ca.autori) {
-                if (!autoriContor.containsKey(a)) {
+                if (!autoriContor.containsKey(a.getNume())) {
                     contor = 0;
                     contor++;
-                    autoriContor.put(a, contor);
                 } else {
                     contor++;
-                    autoriContor.remove(a);
-                    autoriContor.put(a, contor);
+                    autoriContor.remove(a.getNume());
                 }
-
+                autoriContor.put(a.getNume(), contor);
             }
         }
 
-        //LinkedHashMap preserve the ordering of elements in which they are inserted
-        LinkedHashMap<Autor, Integer> reverseSortedMap = new LinkedHashMap<>();
-
-        //Use Comparator.reverseOrder() for reverse ordering
+        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
         autoriContor.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
 
-        reverseSortedMap.forEach((k, v) -> autorCuCarti = dbInstance.getAutorCuCartiDao().getAutoriCuCartiByName(k.getNume()));
-
-
-        Log.i("GRUPARE-AUTORI", autorCuCarti.toString());
+        LinkedHashMap<String, Integer> finalReverseSortedMap = new LinkedHashMap<>();
+        AtomicInteger n = new AtomicInteger();
+        reverseSortedMap.forEach((k, v) -> {
+                    if (n.get() != 2) {
+                        finalReverseSortedMap.put(k, v);
+                    }
+                    n.getAndIncrement();
+                }
+        );
+        finalReverseSortedMap.forEach((k, v) -> autorCuCarti.addAll(dbInstance.getAutorCuCartiDao().getAutoriCuCartiByName(k)));
+        Log.i("GRUPARE-AUTORI", finalReverseSortedMap.toString());
     }
 
     private void listareCartiDupaAutori() {
@@ -206,26 +214,46 @@ public class RecomandariActivity extends AppCompatActivity {
         }
 
         BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, listaCartiDeAfisat, getLayoutInflater()) {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView tvAutor = view.findViewById(R.id.autor);
-                StringBuilder stringBuilder;
+                StringBuilder stringBuilder = null;
                 Uri uri = Uri.parse(listaCartiDeAfisat.get(position).getCopertaURI());
                 ImageView iv = view.findViewById(R.id.ivCoperta);
                 iv.setImageURI(uri);
 
-                stringBuilder = new StringBuilder();
                 try {
-                    for (Autor a : listaCartiCuAutori.get(position).autori) {
-                        stringBuilder.append(a.getNume());
-                        if (listaCartiCuAutori.get(position).autori.indexOf(a) != (listaCartiCuAutori.get(position).autori.size() - 1)) {
-                            stringBuilder.append(",");
+                    int nrAutori = 0;
+                    Map<StringBuilder, Integer> autoriCuIdCarte = new HashMap<>();
+                    for (Carte c : listaCartiDeAfisat) {
+                        stringBuilder = new StringBuilder();
+                        for (AutorCuCarte ac : autorCuCarti) {
+                            for (Carte carte : ac.carti) {
+                                if (carte.getIdCarte() == c.getIdCarte()) {
+                                    nrAutori++;
+                                    stringBuilder.append(ac.Autor.getNume());
+                                    if (nrAutori > 1) {
+                                        stringBuilder.append(",");
+                                    }
+                                }
+                            }
                         }
-
+                        autoriCuIdCarte.put(stringBuilder, c.getIdCarte());
                     }
-                    tvAutor.setText(stringBuilder.toString());
+                    AtomicReference<StringBuilder> stringBuilder2 = new AtomicReference<>(new StringBuilder());
+                    autoriCuIdCarte.forEach((k, v) -> {
+                        if (listaCartiDeAfisat.get(position).getIdCarte() == v) {
+                            stringBuilder2.set(k);
+                        }
+                    });
+
+
+                    assert stringBuilder != null;
+                    tvAutor.setText(stringBuilder2.toString());
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -234,4 +262,22 @@ public class RecomandariActivity extends AppCompatActivity {
         };
         listView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu_recomandari, menu);
+        return true;
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.optiuneAutori:
+//                getAutoriFavoriti();
+//                listareCartiDupaAutori();
+//                return false;
+//        }
+//        return true;
+//    }
 }
