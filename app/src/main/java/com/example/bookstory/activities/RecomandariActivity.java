@@ -269,15 +269,15 @@ public class RecomandariActivity extends AppCompatActivity {
         return true;
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.optiuneAutori:
-//                getAutoriFavoriti();
-//                listareCartiDupaAutori();
-//                return false;
-//        }
-//        return true;
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optiuneAutori:
+                getAutoriFavoriti();
+                listareCartiDupaAutori();
+                return false;
+        }
+        return true;
+    }
 }

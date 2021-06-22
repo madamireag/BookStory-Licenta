@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.FisaImprumutActivity" />
-        <activity android:name=".activities.CalendarActivity" />
         <activity android:name=".activities.RecomandariActivity" />
         <activity android:name=".activities.AdminDashboardActivity" />
         <activity android:name=".activities.DashboardActivity" />

@@ -6,5 +6,6 @@
         android:title="@string/edit" />
     <item android:id="@+id/ctxdelete"
         android:title="@string/delete" />
-
+    <item android:id="@+id/ctx_marcheaza_returnare"
+        android:title="@string/marcheaza_ca_returnata" />
 </menu>

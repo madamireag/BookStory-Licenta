@@ -99,25 +99,8 @@ public class ListareCartiActivity extends AppCompatActivity {
                     carteCuAutorList.get(poz).carte.setNrCopiiDisponibile(book.getNrCopiiDisponibile());
                     carteCuAutorList.get(poz).carte.setCopertaURI(book.getCopertaURI());
                     populeazaListaCarti();
-                    BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, carti, getLayoutInflater()) {
-                        @NonNull
-                        @Override
-                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                            View view = super.getView(position, convertView, parent);
-                            TextView tvAutor = view.findViewById(R.id.autor);
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (CarteCuAutor c : carteCuAutorList) {
-                                for (Autor a : c.autori) {
-                                    stringBuilder.append(a.getNume());
-                                    stringBuilder.append(",");
-                                }
-                            }
-                            tvAutor.setText(stringBuilder.toString());
-                            return view;
-                        }
-                    };
-                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    updateUI();
+
                 }
             }
         } else if (requestCode == REQUEST_CODE_ADD_AUTOR && resultCode == RESULT_OK && data != null) {
@@ -129,6 +112,7 @@ public class ListareCartiActivity extends AppCompatActivity {
     }
 
     private void populeazaListaCarti() {
+        carti.clear();
         for (CarteCuAutor c : carteCuAutorList) {
             carti.add(c.carte);
         }
@@ -193,7 +177,14 @@ public class ListareCartiActivity extends AppCompatActivity {
         BooksAdapter adapter = (BooksAdapter) listView.getAdapter();
         boolean[] checkedAuthors = new boolean[authorNames.length];
         switch (item.getItemId()) {
-
+            case R.id.ctx_marcheaza_returnare:
+                Carte c = adapter.getItem(info.position);
+                int nrCopii = c.getNrCopiiDisponibile() + 1;
+                c.setNrCopiiDisponibile(nrCopii);
+                db.getCartiDao().update(c);
+                Log.i("CARTE-ALO", c.toString());
+                adapter.notifyDataSetChanged();
+                break;
             case R.id.ctxaddautor:
                 poz = info.position;
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
