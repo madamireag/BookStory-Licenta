@@ -1,5 +1,6 @@
 package com.example.bookstory.activities;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -269,14 +270,14 @@ public class RecomandariActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.optiuneAutori:
-                getAutoriFavoriti();
-                listareCartiDupaAutori();
-                return false;
+        if (item.getItemId() == R.id.optiuneAutori) {
+            getAutoriFavoriti();
+            listareCartiDupaAutori();
+            return false;
         }
         return true;
     }
