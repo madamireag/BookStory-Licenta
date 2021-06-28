@@ -11,11 +11,11 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="450dp" />
+        android:layout_height="490dp" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="60dp" />
+        android:layout_height="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -26,6 +26,7 @@ import com.example.bookstory.models.AutorCuCarte;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
 import com.example.bookstory.models.Gen;
+import com.example.bookstory.models.Imprumut;
 import com.example.bookstory.models.ImprumutCuCarte;
 import com.example.bookstory.models.Utilizator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +52,9 @@ public class RecomandariActivity extends AppCompatActivity {
     FirebaseAuth auth;
     List<CarteCuAutor> cartiDePastrat = new ArrayList<>();
     List<AutorCuCarte> autorCuCarti = new ArrayList<>();
+    List<Imprumut> imprumuturi = null;
+    Utilizator user = null;
+    boolean areImprumuturiAnterioare = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -61,29 +65,30 @@ public class RecomandariActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvCartiRec);
         auth = FirebaseAuth.getInstance();
 
-        Utilizator user = null;
+
         if (auth.getCurrentUser() != null) {
             user = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
         }
+
         if (user != null) {
-            listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCarti(user.getId());
-            if (listaImprumuturiCuCarti.isEmpty()) {
+            imprumuturi = dbInstance.getImprumutDao().getAllImprumuturiForUser(user.getId());
+            if (imprumuturi.isEmpty()) {
                 listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
+            } else {
+                areImprumuturiAnterioare = true;
+                listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCarti(user.getId());
             }
         }
-
         curataListe();
-        recomandaCartiDupaGen();
-        listareCarti();
-        // getAutoriFavoriti();
-
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onStart() {
         super.onStart();
-
+        recomandaCartiDupaGen();
+        listareCarti();
     }
 
     private void curataListe() {
@@ -94,13 +99,25 @@ public class RecomandariActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void recomandaCartiDupaGen() {
         Map<Gen, List<Carte>> cartiByGenre = new HashMap<>();
+        Map<Gen, List<Carte>> cartiByGenreFinal = new HashMap<>();
         for (ImprumutCuCarte i : listaImprumuturiCuCarti) {
             cartiByGenre.putAll(i.listaCartiImprumut.stream()
                     .collect(groupingBy(Carte::getGenCarte)));
-
+            cartiByGenre.forEach((k, v) -> {
+                if (cartiByGenreFinal.containsKey(k)) {
+                    List<Carte> cartiExistenteInMap = cartiByGenreFinal.get(k);
+                    if (cartiExistenteInMap != null) {
+                        cartiExistenteInMap.addAll(cartiByGenre.get(k));
+                    }
+                    cartiByGenreFinal.remove(k);
+                    cartiByGenreFinal.put(k, cartiExistenteInMap);
+                } else {
+                    cartiByGenreFinal.put(k, cartiByGenre.get(k));
+                }
+            });
         }
         AtomicInteger max = new AtomicInteger();
-        cartiByGenre.forEach((k, v) -> {
+        cartiByGenreFinal.forEach((k, v) -> {
             if (v.size() > max.get()) {
                 max.set(v.size());
             }
@@ -112,7 +129,6 @@ public class RecomandariActivity extends AppCompatActivity {
     }
 
     private void verificaImprumutAnteriorCarti() {
-
         boolean found;
         for (CarteCuAutor ca : listaCartiCuAutori) {
             found = false;
@@ -124,13 +140,16 @@ public class RecomandariActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (!found) {
+            if (areImprumuturiAnterioare) {
+                if (!found) {
+                    listaCartiDeAfisat.add(ca.carte);
+                    cartiDePastrat.add(ca);
+                }
+            } else {
                 listaCartiDeAfisat.add(ca.carte);
                 cartiDePastrat.add(ca);
             }
         }
-
-
     }
 
     public void listareCarti() {
@@ -166,38 +185,45 @@ public class RecomandariActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void getAutoriFavoriti() {
-        curataListe();
+    private void preluareCartiImprumutate() {
         for (ImprumutCuCarte ic : listaImprumuturiCuCarti) {
             for (Carte c : ic.listaCartiImprumut) {
                 listaCartiCuAutori.addAll(dbInstance.getCarteCuAutoriDao().getCarteCuAutoriById(c.getIdCarte()));
             }
         }
+    }
+
+    private void calculFrecventaAparitieAutori() {
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void selectareAutoriFavoriti() {
+        curataListe();
+        preluareCartiImprumutate();
         int contor = 0;
-        Map<String, Integer> autoriContor = new HashMap<>();
+        Map<String, Integer> autoriCuFrecventaAparitiei = new HashMap<>();
         for (CarteCuAutor ca : listaCartiCuAutori) {
             for (Autor a : ca.autori) {
-                if (!autoriContor.containsKey(a.getNume())) {
+                if (!autoriCuFrecventaAparitiei.containsKey(a.getNume())) {
                     contor = 0;
                     contor++;
                 } else {
                     contor++;
-                    autoriContor.remove(a.getNume());
+                    autoriCuFrecventaAparitiei.remove(a.getNume());
                 }
-                autoriContor.put(a.getNume(), contor);
+                autoriCuFrecventaAparitiei.put(a.getNume(), contor);
             }
         }
-
-        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
-        autoriContor.entrySet()
+        LinkedHashMap<String, Integer> autoriCuFrecventaAparitieiDescrescator = new LinkedHashMap<>();
+        autoriCuFrecventaAparitiei.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+                .forEachOrdered(x -> autoriCuFrecventaAparitieiDescrescator.put(x.getKey(), x.getValue()));
 
         LinkedHashMap<String, Integer> finalReverseSortedMap = new LinkedHashMap<>();
         AtomicInteger n = new AtomicInteger();
-        reverseSortedMap.forEach((k, v) -> {
+        autoriCuFrecventaAparitieiDescrescator.forEach((k, v) -> {
                     if (n.get() != 2) {
                         finalReverseSortedMap.put(k, v);
                     }
@@ -205,7 +231,6 @@ public class RecomandariActivity extends AppCompatActivity {
                 }
         );
         finalReverseSortedMap.forEach((k, v) -> autorCuCarti.addAll(dbInstance.getAutorCuCartiDao().getAutoriCuCartiByName(k)));
-        Log.i("GRUPARE-AUTORI", finalReverseSortedMap.toString());
     }
 
     private void listareCartiDupaAutori() {
@@ -275,7 +300,7 @@ public class RecomandariActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.optiuneAutori) {
-            getAutoriFavoriti();
+            selectareAutoriFavoriti();
             listareCartiDupaAutori();
             return false;
         }

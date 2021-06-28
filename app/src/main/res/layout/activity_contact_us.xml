@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,7 +24,9 @@
         android:layout_width="320dp"
         android:layout_toEndOf="@+id/tvTo"
         android:layout_height="wrap_content"
-        android:hint="@string/email" />
+        android:hint="@string/email"
+        android:autofillHints="@string/email"
+        android:inputType="text" />
     <TextView
         android:id="@+id/tvSubject"
         android:layout_width="55dp"
@@ -44,7 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/EditTextToMail"
         android:layout_toEndOf="@+id/tvSubject"
-        android:hint="@string/subiect" />
+        android:hint="@string/subiect"
+        android:autofillHints="@string/subiect"
+        android:inputType="textEmailSubject" />
 
     <EditText
         android:id="@+id/EditTextMesajMail"
@@ -53,7 +56,9 @@
         style="@style/EditTextStyle"
         android:layout_below="@+id/EditTextSubiectMail"
         android:gravity="top"
-        android:hint="@string/introdu_mesajul" />
+        android:hint="@string/introdu_mesajul"
+        android:autofillHints="@string/introdu_mesajul"
+        android:inputType="textCapSentences" />
     <Button
         android:id="@+id/btnTrimiteEmail"
         android:layout_width="wrap_content"

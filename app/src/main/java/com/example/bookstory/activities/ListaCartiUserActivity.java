@@ -249,7 +249,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         canvas.drawText(mesajTaxa + System.lineSeparator(), x, y + 50, paint);
         document.finishPage(page);
         try {
-            String numePDF = "Imprumut" + imprumut.getDataImprumut().toString() + ".pdf";
+            String numePDF = "Imprumut" + day + "-" + month + "-" + year + ".pdf";
             File f = new File(Environment.getExternalStorageDirectory(), numePDF);
             document.writeTo(new FileOutputStream(f));
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();

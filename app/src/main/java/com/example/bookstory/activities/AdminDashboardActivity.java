@@ -71,7 +71,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             }
         });
 
-       db.getImprumutDao().deleteAll();
+       // db.getImprumutDao().deleteAll();
     }
 
     private void initializeUI() {

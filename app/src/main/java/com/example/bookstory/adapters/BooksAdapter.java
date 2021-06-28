@@ -21,10 +21,10 @@ import java.util.Locale;
 
 public class BooksAdapter extends ArrayAdapter<Carte> {
 
-    private LayoutInflater layoutInflater;
-    private Context context;
-    private int resource;
-    private List<Carte> booksList;
+    private final LayoutInflater layoutInflater;
+    private final Context context;
+    private final int resource;
+    private final List<Carte> booksList;
 
     public BooksAdapter(@NonNull Context context, int resource, List<Carte> booksList, LayoutInflater layoutInflater) {
         super(context, resource, booksList);
