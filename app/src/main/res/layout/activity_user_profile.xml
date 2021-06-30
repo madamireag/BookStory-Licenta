@@ -62,11 +62,35 @@
         android:hint="@string/password"
         android:inputType="textPassword" />
 
+    <EditText
+        android:id="@+id/etChangeTelefon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etChangePassword"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/nr_telefon"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etChangeAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etChangeTelefon"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/adresa"
+        android:inputType="text" />
+
     <Button
         android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etChangePassword"
+        android:layout_below="@+id/etChangeAddress"
         android:layout_margin="10dp"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/salveaza_schimbari" />
@@ -75,7 +99,7 @@
         android:id="@+id/btnDeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etChangePassword"
+        android:layout_below="@+id/etChangeAddress"
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:background="@drawable/button_rounded_corners"

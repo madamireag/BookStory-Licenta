@@ -2,7 +2,6 @@ package com.example.bookstory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -75,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void verificaCredentiale(String email, String parola) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
         if (email.isEmpty()) {
             etEmail.setError(getString(R.string.mesaj_err_email_empty));
             isValidEmail = false;
@@ -95,3 +95,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
+
+

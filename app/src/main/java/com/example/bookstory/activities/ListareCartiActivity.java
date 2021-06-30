@@ -1,15 +1,10 @@
 package com.example.bookstory.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +16,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.bookstory.R;
 import com.example.bookstory.adapters.BooksAdapter;
 import com.example.bookstory.database.LibraryDB;
@@ -28,7 +27,6 @@ import com.example.bookstory.models.Autor;
 import com.example.bookstory.models.AutorCarte;
 import com.example.bookstory.models.Carte;
 import com.example.bookstory.models.CarteCuAutor;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -182,34 +180,35 @@ public class ListareCartiActivity extends AppCompatActivity {
                 int nrCopii = c.getNrCopiiDisponibile() + 1;
                 c.setNrCopiiDisponibile(nrCopii);
                 db.getCartiDao().update(c);
-                Log.i("CARTE-ALO", c.toString());
                 adapter.notifyDataSetChanged();
                 break;
+
             case R.id.ctxaddautor:
                 poz = info.position;
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Autori disponibili");
+                builder.setTitle(R.string.autori_disponibili);
                 builder.setMultiChoiceItems(authorNames, checkedAuthors, (dialog, which, isChecked) -> checkedAuthors[which] = isChecked);
-                builder.setPositiveButton("OK", (dialog, which) -> {
-                    Toast.makeText(getApplicationContext(), "OK button was pressed", Toast.LENGTH_LONG).show();
+                builder.setPositiveButton(R.string.ok, (dialog, which) -> {
+                    Toast.makeText(getApplicationContext(), R.string.mesaj_dialog_autori_ok, Toast.LENGTH_LONG).show();
                     for (int i = 0; i < checkedAuthors.length; i++) {
                         boolean checked = checkedAuthors[i];
                         if (checked) {
                             AutorCarte ac = new AutorCarte(authorIds[i], adapter.getItem(info.position).getIdCarte());
-                            Log.i("AUTOR-ID", String.valueOf(authorIds[i]));
                             db.getCarteCuAutoriDao().insert(ac);
                             updateUI();
                         }
                     }
                 });
-                builder.setNeutralButton("Adauga autor", (dialog, which) -> {
+                builder.setNeutralButton(R.string.adauga_autor, (dialog, which) -> {
                     Intent intent = new Intent(getApplicationContext(), AddAuthorActivity.class);
                     startActivityForResult(intent, REQUEST_CODE_ADD_AUTOR);
                 });
-                builder.setNegativeButton("Cancel", (dialog, which) -> Toast.makeText(getApplicationContext(), "Cancel button was pressed", Toast.LENGTH_LONG).show());
+                builder.setNegativeButton(R.string.cancel, (dialog, which) -> Toast.makeText(getApplicationContext(),
+                        R.string.mesaj_dialog_cancel, Toast.LENGTH_LONG).show());
                 AlertDialog newDialog = builder.create();
                 newDialog.show();
                 break;
+
             case R.id.ctxedit:
                 AdaugaCarteActivity.isUpdate = true;
                 poz = info.position;

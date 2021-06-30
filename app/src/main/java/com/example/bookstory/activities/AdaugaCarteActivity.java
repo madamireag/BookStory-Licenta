@@ -48,10 +48,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
         if (intent.hasExtra(ListareCartiActivity.EDIT_BOOK)) {
             populeazaCampuri();
         }
-        btnAddImagine.setOnClickListener(v -> {
-            Intent gallery = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(gallery, GALLERY_REQUEST_CODE);
-        });
+
         btnSave.setOnClickListener(v -> {
             if (etTitlu.getText().toString().isEmpty()) {
                 etTitlu.setError(getString(R.string.introdu_titlul));
@@ -75,21 +72,25 @@ public class AdaugaCarteActivity extends AppCompatActivity {
             }
         });
 
+        btnAddImagine.setOnClickListener(v -> {
+            Intent gallery = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+        });
     }
 
-    private void initializeUI() {
-        etISBN = findViewById(R.id.etISBN);
-        etTitlu = findViewById(R.id.editTextTitle);
-        etNrCopii = findViewById(R.id.etNrCopii);
-        spinner = findViewById(R.id.spinnerGenre);
-        btnAddImagine = findViewById(R.id.btnAddCoperta);
-        btnSave = findViewById(R.id.btnSalvare);
-        imageView = findViewById(R.id.bookCover);
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                Uri contentUri = data.getData();
+                this.bookCoverUri = contentUri;
+                this.imageView.setImageURI(contentUri);
+            }
+        }
     }
 
     private void populeazaCampuri() {
-
         Carte carte = (Carte) intent.getSerializableExtra(ListareCartiActivity.EDIT_BOOK);
         isUpdate = true;
         editBookId = carte.getIdCarte();
@@ -105,15 +106,15 @@ public class AdaugaCarteActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                Uri contentUri = data.getData();
-                this.bookCoverUri = contentUri;
-                this.imageView.setImageURI(contentUri);
-            }
-        }
+    private void initializeUI() {
+        etISBN = findViewById(R.id.etISBN);
+        etTitlu = findViewById(R.id.editTextTitle);
+        etNrCopii = findViewById(R.id.etNrCopii);
+        spinner = findViewById(R.id.spinnerGenre);
+        btnAddImagine = findViewById(R.id.btnAddCoperta);
+        btnSave = findViewById(R.id.btnSalvare);
+        imageView = findViewById(R.id.bookCover);
+
     }
+
 }

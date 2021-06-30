@@ -21,7 +21,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
-
     private List<Imprumut> imprumuturi;
     private LayoutInflater layoutInflater;
     private Context context;
@@ -44,6 +43,7 @@ public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
         Imprumut imprumut = imprumuturi.get(position);
         if (imprumut != null) {
             TextView tvDataImprumut = view.findViewById(R.id.tvDataImprumut);
+            TextView tvDataScadenta = view.findViewById(R.id.tvDataScadenta);
             LocalDate localDateBorrow;
             if (imprumut.getDataImprumut() != null) {
                 localDateBorrow = imprumut.getDataImprumut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -52,9 +52,6 @@ public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
                 int dayBorrow = localDateBorrow.getDayOfMonth();
                 tvDataImprumut.setText(String.format("Data imprumut: %d-%s-%d", dayBorrow, monthBorrow, yearBorrow));
             }
-
-            TextView tvDataScadenta = view.findViewById(R.id.tvDataScadenta);
-
             if (imprumut.getDataScadenta() != null) {
                 LocalDate localDateReturn = imprumut.getDataScadenta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 int yearReturn = localDateReturn.getYear();
@@ -62,7 +59,6 @@ public class ImprumutAdapter extends ArrayAdapter<Imprumut> {
                 int dayReturn = localDateReturn.getDayOfMonth();
                 tvDataScadenta.setText(String.format("Data returnare: %d-%s-%d", dayReturn, monthReturn, yearReturn));
             }
-
         }
         return view;
     }

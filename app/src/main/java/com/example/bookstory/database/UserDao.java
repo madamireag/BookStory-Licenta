@@ -3,6 +3,7 @@ package com.example.bookstory.database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.bookstory.models.Utilizator;
 
@@ -20,6 +21,7 @@ public interface UserDao {
     @Query("select * from utilizatori where uid=:uid")
     Utilizator getUserByUid(String uid);
 
-
+    @Update
+    void update(Utilizator u);
 
 }

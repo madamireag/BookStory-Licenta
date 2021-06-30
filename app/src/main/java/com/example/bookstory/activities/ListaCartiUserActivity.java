@@ -89,7 +89,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                     .setTitle(R.string.confirmare_finalizare)
                     .setMessage(R.string.mesaj_confirm_finalizare)
                     .setNegativeButton("Nu", (dialogInterface, which) -> {
-                        cartiImprumutate.clear();
+                        anuleazaImprumut();
                         dialogInterface.cancel();
                     })
                     .setPositiveButton("Da", (dialogInterface, which) -> {
@@ -118,6 +118,10 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void anuleazaImprumut() {
+        cartiImprumutate.clear();
     }
 
     @Override
@@ -199,7 +203,6 @@ public class ListaCartiUserActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void genereazaFisaImprumut(Imprumut imprumut, ImprumutCuCarte ic) {
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -231,10 +234,9 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             numeMembru = auth.getCurrentUser().getDisplayName();
         }
-
         canvas.drawText("Nume membru: " + numeMembru, x, y, paint);
         y += 50;
-        canvas.drawText("Au fost rezervate pentru imprumut urmatoarele listaCartiDeAfisat:" + System.lineSeparator(), x, y, paint);
+        canvas.drawText("Au fost rezervate pentru imprumut urmatoarele carti:" + System.lineSeparator(), x, y, paint);
         for (Carte c : ic.listaCartiImprumut) {
             y += 50;
             canvas.drawText(c.getTitlu() + System.lineSeparator(), x, y, paint);
@@ -277,12 +279,14 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                 boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (writeStorage && readStorage) {
-                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.permission_granted, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }
     }
 }
+
+

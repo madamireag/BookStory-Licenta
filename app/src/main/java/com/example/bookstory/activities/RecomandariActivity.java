@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -173,7 +172,6 @@ public class RecomandariActivity extends AppCompatActivity {
                         if (cartiDePastrat.get(position).autori.indexOf(a) != (cartiDePastrat.get(position).autori.size() - 1)) {
                             stringBuilder.append(",");
                         }
-
                     }
                     tvAutor.setText(stringBuilder.toString());
                 } catch (Exception ex) {
@@ -191,10 +189,6 @@ public class RecomandariActivity extends AppCompatActivity {
                 listaCartiCuAutori.addAll(dbInstance.getCarteCuAutoriDao().getCarteCuAutoriById(c.getIdCarte()));
             }
         }
-    }
-
-    private void calculFrecventaAparitieAutori() {
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
