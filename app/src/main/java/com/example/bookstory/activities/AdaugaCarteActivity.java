@@ -104,6 +104,7 @@ public class AdaugaCarteActivity extends AppCompatActivity {
                     spinner.setSelection(i);
                     break;
                 }
+            imageView.setImageURI(Uri.parse(carte.getCopertaURI()));
         }
     }
 

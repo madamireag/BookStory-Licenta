@@ -13,13 +13,12 @@ public class ContactUsActivity extends AppCompatActivity {
     private EditText eSubject;
     private EditText eMsg;
     private EditText eTomail;
-    private Button btnTrimite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
-        btnTrimite = findViewById(R.id.btnTrimiteEmail);
+        Button btnTrimite = findViewById(R.id.btnTrimiteEmail);
         eSubject = findViewById(R.id.EditTextSubiectMail);
         eMsg = findViewById(R.id.EditTextMesajMail);
         eTomail = findViewById(R.id.EditTextToMail);
