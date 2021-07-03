@@ -1,5 +1,6 @@
 package com.example.bookstory.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookstory.R;
@@ -50,6 +52,7 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
             }
         }
         ImprumutAdapter adapter = new ImprumutAdapter(getApplicationContext(), R.layout.element_imprumut, imprumuturi, getLayoutInflater()) {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

@@ -27,6 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth auth;
     ProgressBar progressBar;
     LibraryDB dbInstance;
+    boolean isValidEmail = true;
+    boolean isValidPassword = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +45,34 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), R.string.enter_email, Toast.LENGTH_LONG).show();
+        verificaCredentiale(email, password);
+        if (!isValidEmail) {
             progressBar.setVisibility(View.GONE);
         }
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_LONG).show();
+        if (!isValidPassword) {
             progressBar.setVisibility(View.GONE);
-            return;
         }
-        if (password.length() < 6) {
-            Toast.makeText(getApplicationContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
-        }
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Utilizator utilizator = new Utilizator(etName.getText().toString(), etAdresa.getText().toString(),
-                        String.valueOf(etNrTelefon.getText()), email, password, task.getResult().getUser().getUid());
-                utilizator.setId(dbInstance.getUserDao().insert(utilizator));
+        verificaDateUtilizator(etName.getText().toString(), etNrTelefon.getText().toString(), etAdresa.getText().toString());
+        if (isValidPassword && isValidEmail) {
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Utilizator utilizator = new Utilizator(etName.getText().toString(), etAdresa.getText().toString(),
+                                    String.valueOf(etNrTelefon.getText()), email, password, task.getResult().getUser().getUid());
+                            utilizator.setId(dbInstance.getUserDao().insert(utilizator));
 
-                Toast.makeText(getApplicationContext(), R.string.reg_successfull, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.reg_failed, Toast.LENGTH_LONG).show();
-                //  Log.i("EROARE",task.getResult().toString());
-            }
-            progressBar.setVisibility(View.GONE);
-        }).addOnSuccessListener(authResult -> {
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
-            authResult.getUser().updateProfile(profileUpdates);
-        });
-
+                            Toast.makeText(getApplicationContext(), R.string.reg_successfull, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.reg_failed, Toast.LENGTH_LONG).show();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }).addOnSuccessListener(authResult -> {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
+                if (authResult.getUser() != null) {
+                    authResult.getUser().updateProfile(profileUpdates);
+                }
+            });
+        }
     }
 
     private void initializeUI() {
@@ -82,5 +83,47 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarRegister);
         etNrTelefon = findViewById(R.id.etTelefon);
         etAdresa = findViewById(R.id.etAdresa);
+    }
+
+    private void verificaCredentiale(String email, String parola) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+        if (email.isEmpty()) {
+            etEmail.setError(getString(R.string.mesaj_err_email_empty));
+            isValidEmail = false;
+        } else {
+            isValidEmail = true;
+        }
+        if (!email.matches(emailRegex)) {
+            etEmail.setError(getString(R.string.format_invalid_email));
+            isValidEmail = false;
+        } else {
+            isValidEmail = true;
+        }
+        if (parola.isEmpty()) {
+            etPassword.setError(getString(R.string.mesaj_err_parola_empty));
+            isValidPassword = false;
+        } else {
+            isValidPassword = true;
+        }
+        if (parola.length() < 6) {
+            etPassword.setError(getString(R.string.invalid_password));
+            isValidPassword = false;
+        }
+    }
+
+    private void verificaDateUtilizator(String nume, String telefon, String adresa) {
+        if (nume.isEmpty()) {
+            etName.setError(getString(R.string.err_nume_empty));
+        }
+        if (adresa.isEmpty()) {
+            etAdresa.setError(getString(R.string.err_adresa_empty));
+        }
+        if (telefon.isEmpty()) {
+            etNrTelefon.setError(getString(R.string.err_telefon_empty));
+        }
+        if (!android.util.Patterns.PHONE.matcher(telefon).matches()) {
+            etNrTelefon.setError(getString(R.string.err_nr_telefon_invalid));
+        }
     }
 }
