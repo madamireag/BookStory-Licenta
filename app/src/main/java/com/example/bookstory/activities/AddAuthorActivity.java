@@ -22,16 +22,24 @@ public class AddAuthorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_author);
-        etNumeAutor = findViewById(R.id.etNumeAutor);
-        btnAddAutor = findViewById(R.id.btnAddAutor);
+        initializeUI();
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
         intent = getIntent();
         btnAddAutor.setOnClickListener(v -> {
-            Autor autor = new Autor(etNumeAutor.getText().toString());
-            autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
-            intent.putExtra(ADD_AUTOR, autor);
+            if (etNumeAutor.getText().toString().isEmpty()) {
+                etNumeAutor.setError(getString(R.string.err_autor_empty));
+            } else {
+                Autor autor = new Autor(etNumeAutor.getText().toString());
+                autor.setIdAutor(dbInstance.getAutorDao().insert(autor));
+                intent.putExtra(ADD_AUTOR, autor);
+            }
             setResult(RESULT_OK, intent);
             finish();
         });
+    }
+
+    private void initializeUI() {
+        etNumeAutor = findViewById(R.id.etNumeAutor);
+        btnAddAutor = findViewById(R.id.btnAddAutor);
     }
 }

@@ -93,17 +93,18 @@ public class AdaugaCarteActivity extends AppCompatActivity {
     private void populeazaCampuri() {
         Carte carte = (Carte) intent.getSerializableExtra(ListareCartiActivity.EDIT_BOOK);
         isUpdate = true;
-        editBookId = carte.getIdCarte();
-        etISBN.setText(carte.getISBN());
-        etTitlu.setText(carte.getTitlu());
-        etNrCopii.setText(String.valueOf(carte.getNrCopiiDisponibile()));
-        ArrayAdapter<String> adaptor = (ArrayAdapter<String>) spinner.getAdapter();
-        for (int i = 0; i < adaptor.getCount(); i++)
-            if (adaptor.getItem(i).equals(String.valueOf(carte.getGenCarte()).toUpperCase())) {
-                spinner.setSelection(i);
-                break;
-            }
-
+        if (carte != null) {
+            editBookId = carte.getIdCarte();
+            etISBN.setText(carte.getISBN());
+            etTitlu.setText(carte.getTitlu());
+            etNrCopii.setText(String.valueOf(carte.getNrCopiiDisponibile()));
+            ArrayAdapter<String> adaptor = (ArrayAdapter<String>) spinner.getAdapter();
+            for (int i = 0; i < adaptor.getCount(); i++)
+                if (adaptor.getItem(i).equals(String.valueOf(carte.getGenCarte()).toUpperCase())) {
+                    spinner.setSelection(i);
+                    break;
+                }
+        }
     }
 
     private void initializeUI() {

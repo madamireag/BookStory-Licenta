@@ -54,14 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
-                    Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                    if (task.getException().getLocalizedMessage() != null) {
+                        Snackbar.make(layout, task.getException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                    }
                 }
-            }).addOnFailureListener(e -> Snackbar.make(layout, e.getMessage(), Snackbar.LENGTH_LONG).show());
+            }).addOnFailureListener(e -> Snackbar.make(layout, e.getMessage() != null ? e.getMessage() : "Login failed", Snackbar.LENGTH_LONG).show());
         } else {
             Toast.makeText(getApplicationContext(), R.string.mesaj_date_conectare_invalide, Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void initializeUI() {
@@ -73,16 +73,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verificaCredentiale(String email, String parola) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-
         if (email.isEmpty()) {
             etEmail.setError(getString(R.string.mesaj_err_email_empty));
-            isValidEmail = false;
-        } else {
-            isValidEmail = true;
-        }
-        if (!email.matches(emailRegex)) {
-            etEmail.setError(getString(R.string.format_invalid_email));
             isValidEmail = false;
         } else {
             isValidEmail = true;

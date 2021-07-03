@@ -51,12 +51,12 @@ public class UserProfileActivity extends AppCompatActivity {
             utilizator = db.getUserDao().getUserByUid(firebaseUser.getUid());
             if (firebaseUser.getPhotoUrl() != null) {
                 profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
+                etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
+                etChangeEmail.setText(firebaseUser.getEmail());
+                etChangePhone.setText(utilizator.getNrTelefon());
+                etChangeAdresa.setText(utilizator.getAdresa());
+                circleImageView.setImageURI(profilePic);
             }
-            etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
-            etChangeEmail.setText(firebaseUser.getEmail());
-            etChangePhone.setText(utilizator.getNrTelefon());
-            etChangeAdresa.setText(utilizator.getAdresa());
-            circleImageView.setImageURI(profilePic);
         }
 
 

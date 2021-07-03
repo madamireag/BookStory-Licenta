@@ -2,7 +2,6 @@ package com.example.bookstory.database;
 
 import androidx.room.Dao;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
 import com.example.bookstory.models.AutorCuCarte;
 

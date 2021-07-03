@@ -35,6 +35,8 @@ public interface CarteCuAutoriDao {
     @Query("select * from carti where genCarte=:gen")
     List<CarteCuAutor> getCartiByGenre(Gen gen);
 
+    @Query("select * from carti order by titlu")
+    List<CarteCuAutor> getCartiOrderedByTitle();
 
 
 }
