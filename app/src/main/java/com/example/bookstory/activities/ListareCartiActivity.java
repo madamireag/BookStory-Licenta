@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,14 +80,9 @@ public class ListareCartiActivity extends AppCompatActivity {
             Carte book = (Carte) data.getSerializableExtra(AdaugaCarteActivity.ADD_BOOK);
             if (book != null) {
                 carti.add(book);
-                BooksAdapter adapter = new BooksAdapter(getApplicationContext(), R.layout.element_carte_lista, carti, getLayoutInflater()) {
-                    @NonNull
-                    @Override
-                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        return super.getView(position, convertView, parent);
-                    }
-                };
-                listView.setAdapter(adapter);
+                carteCuAutorList.addAll(db.getCarteCuAutoriDao().getCarteCuAutoriById(book.getIdCarte()));
+                populeazaListaCarti();
+                updateUI();
             }
         } else if (requestCode == REQUEST_CODE_EDIT_BOOK && resultCode == RESULT_OK && data != null) {
             Carte book = (Carte) data.getSerializableExtra(AdaugaCarteActivity.ADD_BOOK);
@@ -111,6 +108,8 @@ public class ListareCartiActivity extends AppCompatActivity {
 
     private void populeazaListaCarti() {
         carti.clear();
+        carteCuAutorList.clear();
+        carteCuAutorList = db.getCarteCuAutoriDao().getCarteCuAutori();
         for (CarteCuAutor c : carteCuAutorList) {
             carti.add(c.carte);
         }
@@ -195,9 +194,10 @@ public class ListareCartiActivity extends AppCompatActivity {
                         if (checked) {
                             AutorCarte ac = new AutorCarte(authorIds[i], adapter.getItem(info.position).getIdCarte());
                             db.getCarteCuAutoriDao().insert(ac);
-                            updateUI();
                         }
                     }
+                    populeazaListaCarti();
+                    updateUI();
                 });
                 builder.setNeutralButton(R.string.adauga_autor, (dialog, which) -> {
                     Intent intent = new Intent(getApplicationContext(), AddAuthorActivity.class);
@@ -221,9 +221,12 @@ public class ListareCartiActivity extends AppCompatActivity {
                 AlertDialog dialog = new AlertDialog.Builder(ListareCartiActivity.this)
                         .setTitle(R.string.confirmare_stergere)
                         .setMessage(R.string.mesaj_stergere)
-                        .setNegativeButton("No", (dialogInterface, which) -> dialogInterface.cancel())
+                        .setNegativeButton("No", (dialogInterface, which) -> {
+                            dialogInterface.cancel();
+                        })
                         .setPositiveButton("Yes", (dialogInterface, which) -> {
                             db.getCarteCuAutoriDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
+                            Log.i("DE-STERS", adapter.getItem(info.position).toString());
                             db.getCartiDao().deleteBook(adapter.getItem(info.position));
                             adapter.remove(adapter.getItem(info.position));
                             adapter.notifyDataSetChanged();
