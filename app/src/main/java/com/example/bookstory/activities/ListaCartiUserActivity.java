@@ -2,6 +2,7 @@ package com.example.bookstory.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -69,6 +70,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     private List<CarteCuAutor> carteCuAutorList = new ArrayList<>();
     List<Carte> carti = new ArrayList<>();
     List<Carte> cartiImprumutate = new ArrayList<>();
+    public static final String CARTE = "carteSelectata";
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -139,6 +141,11 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.ctxImprumutaCarte:
                 cartiImprumutate.add(adapter.getItem(info.position));
+                break;
+            case R.id.ctxVeziComentarii:
+                Intent intent = new Intent(getApplicationContext(), CommentsActivity.class);
+                intent.putExtra(CARTE, adapter.getItem(info.position));
+                startActivity(intent);
                 break;
             case R.id.ctxRenunta:
                 cartiImprumutate.remove(adapter.getItem(info.position));

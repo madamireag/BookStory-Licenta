@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,7 +94,6 @@ public class ListareCartiActivity extends AppCompatActivity {
                     carteCuAutorList.get(poz).carte.setCopertaURI(book.getCopertaURI());
                     populeazaListaCarti();
                     updateUI();
-
                 }
             }
         } else if (requestCode == REQUEST_CODE_ADD_AUTOR && resultCode == RESULT_OK && data != null) {
@@ -221,9 +219,7 @@ public class ListareCartiActivity extends AppCompatActivity {
                 AlertDialog dialog = new AlertDialog.Builder(ListareCartiActivity.this)
                         .setTitle(R.string.confirmare_stergere)
                         .setMessage(R.string.mesaj_stergere)
-                        .setNegativeButton("No", (dialogInterface, which) -> {
-                            dialogInterface.cancel();
-                        })
+                        .setNegativeButton("No", (dialogInterface, which) -> dialogInterface.cancel())
                         .setPositiveButton("Yes", (dialogInterface, which) -> {
                             db.getCarteCuAutoriDao().deleteBookById(adapter.getItem(info.position).getIdCarte());
                             Log.i("DE-STERS", adapter.getItem(info.position).toString());

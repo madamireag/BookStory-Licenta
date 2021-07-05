@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".activities.CommentsActivity">
+
+
+    <ListView
+        android:id="@+id/lvCom"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/etComentariu"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/lvCom"
+        android:layout_marginTop="48dp"
+        android:autofillHints="@string/introdu_mesajul"
+        android:gravity="top"
+        android:inputType="textCapSentences"
+        app:layout_constraintTop_toBottomOf="@+id/lvCom"
+        tools:layout_editor_absoluteX="19dp" />
+
+    <ImageView
+        android:id="@+id/ivComentariu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etComentariu"
+        app:layout_constraintEnd_toEndOf="@+id/etComentariu"
+        app:layout_constraintTop_toTopOf="@+id/etComentariu"
+        app:srcCompat="@drawable/ic_send" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

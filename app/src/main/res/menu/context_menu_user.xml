@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/ctxImprumutaCarte"
+    <item
+        android:id="@+id/ctxImprumutaCarte"
         android:title="@string/imprumuta_cartea" />
-<item android:id="@+id/ctxRenunta"
+    <item
+        android:id="@+id/ctxRenunta"
         android:title="@string/renunta_la_carte" />
+    <item
+        android:id="@+id/ctxVeziComentarii"
+        android:title="@string/vizualizeaza_comentarii" />
 </menu>
