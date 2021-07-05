@@ -9,6 +9,14 @@
     tools:context=".activities.CommentsActivity">
 
 
+    <TextView
+        android:id="@+id/tvComentariiCarte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/lvCom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         android:id="@+id/lvCom"
         android:layout_width="match_parent"
@@ -28,6 +36,7 @@
         android:layout_marginTop="48dp"
         android:autofillHints="@string/introdu_mesajul"
         android:gravity="top"
+        android:hint="@string/introdu_un_comentariu"
         android:inputType="textCapSentences"
         app:layout_constraintTop_toBottomOf="@+id/lvCom"
         tools:layout_editor_absoluteX="19dp" />
@@ -38,6 +47,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/send"
         app:layout_constraintBottom_toBottomOf="@+id/etComentariu"
         app:layout_constraintEnd_toEndOf="@+id/etComentariu"
         app:layout_constraintTop_toTopOf="@+id/etComentariu"
