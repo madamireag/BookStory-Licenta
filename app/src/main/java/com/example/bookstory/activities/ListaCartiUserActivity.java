@@ -72,7 +72,6 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     List<Carte> cartiImprumutate = new ArrayList<>();
     public static final String CARTE = "carteSelectata";
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +94,7 @@ public class ListaCartiUserActivity extends AppCompatActivity {
                         dialogInterface.cancel();
                     })
                     .setPositiveButton("Da", (dialogInterface, which) -> {
-                        if (auth.getCurrentUser() != null) {
+                        if (auth.getCurrentUser() != null && !cartiImprumutate.isEmpty()) {
                             Utilizator utilizator = db.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
@@ -123,7 +122,15 @@ public class ListaCartiUserActivity extends AppCompatActivity {
     }
 
     private void anuleazaImprumut() {
+        BooksAdapter adapter = (BooksAdapter) listView.getAdapter();
+        for (Carte c : cartiImprumutate) {
+            int nrCopii = c.getNrCopiiDisponibile() + 1;
+            c.setNrCopiiDisponibile(nrCopii);
+            db.getCartiDao().update(c);
+            adapter.notifyDataSetChanged();
+        }
         cartiImprumutate.clear();
+
     }
 
     @Override
@@ -140,7 +147,12 @@ public class ListaCartiUserActivity extends AppCompatActivity {
         BooksAdapter adapter = (BooksAdapter) listView.getAdapter();
         switch (item.getItemId()) {
             case R.id.ctxImprumutaCarte:
-                cartiImprumutate.add(adapter.getItem(info.position));
+                Carte c = adapter.getItem(info.position);
+                cartiImprumutate.add(c);
+                int nrCopii = c.getNrCopiiDisponibile() - 1;
+                c.setNrCopiiDisponibile(nrCopii);
+                db.getCartiDao().update(c);
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.ctxVeziComentarii:
                 Intent intent = new Intent(getApplicationContext(), CommentsActivity.class);

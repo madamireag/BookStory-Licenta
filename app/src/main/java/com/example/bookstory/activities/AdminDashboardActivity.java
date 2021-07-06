@@ -70,8 +70,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        cvAddAuthor.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), VizualizareImprumuturiActivity.class);
+            startActivity(intent);
+        });
 
-       // db.getImprumutDao().deleteAll();
+        // db.getImprumutDao().deleteAll();
     }
 
     private void initializeUI() {

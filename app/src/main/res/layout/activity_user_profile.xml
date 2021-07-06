@@ -34,9 +34,11 @@
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+        android:autofillHints=""
         android:background="@android:color/transparent"
         android:ems="10"
         android:gravity="center"
+        android:hint="@string/nume_complet"
         android:inputType="textPersonName" />
 
     <EditText
@@ -46,8 +48,10 @@
         android:layout_below="@+id/etDisplayName"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+        android:autofillHints="@string/email"
         android:ems="10"
         android:gravity="center"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -60,6 +64,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/password"
+        android:importantForAutofill="no"
         android:inputType="textPassword" />
 
     <EditText
@@ -69,6 +74,7 @@
         android:layout_below="@+id/etChangePassword"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+        android:autofillHints=""
         android:ems="10"
         android:gravity="center"
         android:hint="@string/nr_telefon"
@@ -84,6 +90,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/adresa"
+        android:importantForAutofill="no"
         android:inputType="text" />
 
     <Button

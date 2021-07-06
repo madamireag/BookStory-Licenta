@@ -105,7 +105,7 @@ public class RecomandariActivity extends AppCompatActivity {
                 listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
             } else {
                 areImprumuturiAnterioare = true;
-                listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCarti(user.getId());
+                listaImprumuturiCuCarti = dbInstance.getImprumutCuCarteDao().getImprumutcuCartiByUserId(user.getId());
             }
         }
 

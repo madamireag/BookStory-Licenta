@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (isValidPassword && isValidEmail) {
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && task.getResult() != null && task.getResult().getUser() != null) {
                             Utilizator utilizator = new Utilizator(etName.getText().toString(), etAdresa.getText().toString(),
                                     String.valueOf(etNrTelefon.getText()), email, password, task.getResult().getUser().getUid());
                             utilizator.setId(dbInstance.getUserDao().insert(utilizator));

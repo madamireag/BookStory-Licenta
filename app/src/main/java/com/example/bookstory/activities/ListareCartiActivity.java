@@ -182,7 +182,7 @@ public class ListareCartiActivity extends AppCompatActivity {
 
             case R.id.ctxaddautor:
                 poz = info.position;
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListareCartiActivity.this);
                 builder.setTitle(R.string.autori_disponibili);
                 builder.setMultiChoiceItems(authorNames, checkedAuthors, (dialog, which, isChecked) -> checkedAuthors[which] = isChecked);
                 builder.setPositiveButton(R.string.ok, (dialog, which) -> {

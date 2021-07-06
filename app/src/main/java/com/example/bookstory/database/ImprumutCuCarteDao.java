@@ -20,7 +20,7 @@ public interface ImprumutCuCarteDao {
 
     @Transaction
     @Query("SELECT * FROM imprumuturi where idUtilizator = :id")
-    List<ImprumutCuCarte> getImprumutcuCarti(long id);
+    List<ImprumutCuCarte> getImprumutcuCartiByUserId(long id);
 
     @Transaction
     @Query("SELECT * FROM imprumuturi")

@@ -43,34 +43,38 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             utilizator = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
         }
-        imprumutCuCarteList = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
         if (utilizator != null) {
-            for (ImprumutCuCarte ic : imprumutCuCarteList) {
-                if (ic.imprumut.getIdUtilizator() == utilizator.getId()) {
-                    imprumuturi.add(ic.imprumut);
-                }
-            }
+            imprumutCuCarteList = dbInstance.getImprumutCuCarteDao().getImprumutcuCartiByUserId(utilizator.getId());
+        } else {
+            imprumutCuCarteList = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
         }
-        ImprumutAdapter adapter = new ImprumutAdapter(getApplicationContext(), R.layout.element_imprumut, imprumuturi, getLayoutInflater()) {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                StringBuilder stringBuilder;
-                TextView tvCartiImprumut = view.findViewById(R.id.tvCartiImprumut);
-                stringBuilder = new StringBuilder();
-                for (Carte c : imprumutCuCarteList.get(position).listaCartiImprumut) {
-                    stringBuilder.append(c.getTitlu());
-                    if (imprumutCuCarteList.get(position).listaCartiImprumut.indexOf(c) != (imprumutCuCarteList.get(position).listaCartiImprumut.size() - 1)) {
-                        stringBuilder.append(System.lineSeparator());
-                    }
-                }
-                tvCartiImprumut.setText(stringBuilder.toString());
-                return view;
+        if (!imprumutCuCarteList.isEmpty()) {
+            for (ImprumutCuCarte ic : imprumutCuCarteList) {
+                imprumuturi.add(ic.imprumut);
             }
-        };
-        listView.setAdapter(adapter);
+
+            ImprumutAdapter adapter = new ImprumutAdapter(getApplicationContext(), R.layout.element_imprumut, imprumuturi, getLayoutInflater()) {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    View view = super.getView(position, convertView, parent);
+                    StringBuilder stringBuilder;
+                    TextView tvCartiImprumut = view.findViewById(R.id.tvCartiImprumut);
+                    stringBuilder = new StringBuilder();
+                    for (Carte c : imprumutCuCarteList.get(position).listaCartiImprumut) {
+                        stringBuilder.append(c.getTitlu());
+                        if (imprumutCuCarteList.get(position).listaCartiImprumut.indexOf(c) != (imprumutCuCarteList.get(position).listaCartiImprumut.size() - 1)) {
+                            stringBuilder.append(System.lineSeparator());
+                        }
+                    }
+                    tvCartiImprumut.setText(stringBuilder.toString());
+                    return view;
+                }
+            };
+            listView.setAdapter(adapter);
+        }
+
 
     }
 }

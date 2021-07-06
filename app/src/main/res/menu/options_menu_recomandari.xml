@@ -3,4 +3,5 @@
     <item
         android:id="@+id/optiuneAutori"
         android:title="@string/autori_preferati" />
+
 </menu>

@@ -9,6 +9,7 @@
     android:orientation="vertical"
     tools:context=".activities.ListaCartiUserActivity">
 
+
     <ListView
         android:id="@+id/lvCartiUser"
         android:layout_width="match_parent"
