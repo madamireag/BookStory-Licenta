@@ -92,8 +92,8 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 13);
-        calendar.set(Calendar.MINUTE, 49);
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 13);
         calendar.set(Calendar.SECOND, 0);
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
@@ -124,6 +124,11 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private Notification getNotification(String content) {
+        Intent notifyIntent = new Intent(this, VizualizareImprumuturiActivity.class);
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(
+                this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+        );
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
         builder.setContentTitle(getString(R.string.imprumut_scadent_notification));
         builder.setContentText(content);
@@ -131,6 +136,7 @@ public class DashboardActivity extends AppCompatActivity {
         builder.setAutoCancel(true);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         builder.setColor(Color.CYAN);
+        builder.setContentIntent(notifyPendingIntent);
         return builder.build();
     }
 
