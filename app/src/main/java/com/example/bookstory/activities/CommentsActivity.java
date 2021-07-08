@@ -43,20 +43,18 @@ public class CommentsActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvCom);
         intent = getIntent();
 
-
         if (intent.hasExtra(ListaCartiUserActivity.CARTE)) {
             c = (Carte) intent.getSerializableExtra(ListaCartiUserActivity.CARTE);
             String string = "Comentarii despre " + c.getTitlu();
             tv.setText(string);
-
             listaComentarii = getArrayList(String.valueOf(c.getIdCarte()));
-
             if (listaComentarii != null) {
                 ArrayAdapter<String> itemsAdapter =
                         new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaComentarii);
                 listView.setAdapter(itemsAdapter);
             }
         }
+
         ivSendComment.setOnClickListener(v -> {
             String comment = etComment.getText().toString();
             if (!comment.isEmpty()) {
@@ -68,11 +66,8 @@ public class CommentsActivity extends AppCompatActivity {
                     new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaComentarii);
             listView.setAdapter(itemsAdapter);
             Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_LONG).show();
-
         });
-
     }
-
 
     public void saveArrayList(ArrayList<String> list, String key) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MyPref", 0);

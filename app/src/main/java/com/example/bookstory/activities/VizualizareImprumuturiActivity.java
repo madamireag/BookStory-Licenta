@@ -48,6 +48,7 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
         } else {
             imprumutCuCarteList = dbInstance.getImprumutCuCarteDao().getImprumuturicuCarti();
         }
+
         if (!imprumutCuCarteList.isEmpty()) {
             for (ImprumutCuCarte ic : imprumutCuCarteList) {
                 imprumuturi.add(ic.imprumut);

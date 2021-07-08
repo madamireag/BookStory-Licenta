@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.bookstory.models.Imprumut;
 
@@ -18,13 +19,13 @@ public interface ImprumutDao {
     @Query("SELECT * FROM imprumuturi where idUtilizator=:userId")
     List<Imprumut> getAllImprumuturiForUser(long userId);
 
-    @Query("SELECT * FROM imprumuturi")
-    List<Imprumut> getAll();
-
     @Query("delete from imprumuturi")
     void deleteAll();
 
     @Delete
     void delete(Imprumut i);
+
+    @Update
+    void update(Imprumut i);
 
 }
