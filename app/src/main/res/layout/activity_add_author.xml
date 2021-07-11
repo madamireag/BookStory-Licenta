@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/nume_autor"
         android:inputType="textPersonName" />

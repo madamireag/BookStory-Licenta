@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,19 +96,19 @@ public class DashboardActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 14);
         calendar.set(Calendar.MINUTE, 13);
         calendar.set(Calendar.SECOND, 0);
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-        Date date = calendar.getTime();
-        scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
-//        for (Imprumut i : imprumuturiScadente) {
-//            calendar.setTime(i.getDataScadenta());
-//            calendar.add(Calendar.DATE, -1);
-//         //   String myFormat = "dd/MM/yy"; //In which you need put here
-//         //   SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-//         //   Date date = calendar.getTime();
-//          //  scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
-//            Log.i("TAG-DATA", date.toString());
-//        }
+//        String myFormat = "dd/MM/yy"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+//        Date date = calendar.getTime();
+//        scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
+        for (Imprumut i : imprumuturiScadente) {
+            calendar.setTime(i.getDataScadenta());
+            calendar.add(Calendar.DATE, -1);
+            String myFormat = "dd/MM/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+            Date date = calendar.getTime();
+            scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
+            Log.i("TAG-DATA", date.toString());
+        }
 
 
     }

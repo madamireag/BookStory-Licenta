@@ -311,9 +311,10 @@ public class RecomandariActivity extends AppCompatActivity {
                 iv.setImageURI(uri);
 
                 try {
-                    int nrAutori = 0;
+
                     Map<StringBuilder, Integer> autoriCuIdCarte = new HashMap<>();
                     for (Carte c : listaCartiDeAfisat) {
+                        int nrAutori = 0;
                         stringBuilder = new StringBuilder();
                         for (AutorCuCarte ac : autorCuCarti) {
                             for (Carte carte : ac.carti) {
