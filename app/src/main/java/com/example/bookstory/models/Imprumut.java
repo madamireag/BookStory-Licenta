@@ -69,6 +69,8 @@ public class Imprumut {
     }
 
     public void setTaxaIntarziere(double taxaIntarziere) {
-        this.taxaIntarziere = taxaIntarziere;
+        if (taxaIntarziere > 0) {
+            this.taxaIntarziere = taxaIntarziere;
+        }
     }
 }

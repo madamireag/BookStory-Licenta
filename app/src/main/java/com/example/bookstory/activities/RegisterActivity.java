@@ -26,8 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth auth;
     ProgressBar progressBar;
     LibraryDB dbInstance;
-    boolean isValidEmail = true;
-    boolean isValidPassword = true;
+    boolean isValidUser = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
         verificaCredentiale(email, password);
-        if (!isValidEmail) {
+        if (!isValidUser) {
             progressBar.setVisibility(View.GONE);
         }
-        if (!isValidPassword) {
+        if (!isValidUser) {
             progressBar.setVisibility(View.GONE);
         }
         verificaDateUtilizator(etName.getText().toString(), etNrTelefon.getText().toString(), etAdresa.getText().toString());
-        if (isValidPassword && isValidEmail) {
+        if (isValidUser) {
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null && task.getResult().getUser() != null) {
@@ -89,40 +89,40 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (email.isEmpty()) {
             etEmail.setError(getString(R.string.mesaj_err_email_empty));
-            isValidEmail = false;
+            isValidUser = false;
         } else {
-            isValidEmail = true;
+            isValidUser = true;
         }
         if (!email.matches(emailRegex)) {
             etEmail.setError(getString(R.string.format_invalid_email));
-            isValidEmail = false;
+            isValidUser = false;
         } else {
-            isValidEmail = true;
+            isValidUser = true;
         }
         if (parola.isEmpty()) {
             etPassword.setError(getString(R.string.mesaj_err_parola_empty));
-            isValidPassword = false;
-        } else {
-            isValidPassword = true;
         }
         if (parola.length() < 6) {
             etPassword.setError(getString(R.string.invalid_password));
-            isValidPassword = false;
         }
     }
 
     private void verificaDateUtilizator(String nume, String telefon, String adresa) {
         if (nume.isEmpty()) {
             etName.setError(getString(R.string.err_nume_empty));
+            isValidUser = false;
         }
         if (adresa.isEmpty()) {
             etAdresa.setError(getString(R.string.err_adresa_empty));
+            isValidUser = false;
         }
         if (telefon.isEmpty()) {
             etNrTelefon.setError(getString(R.string.err_telefon_empty));
+            isValidUser = false;
         }
         if (!android.util.Patterns.PHONE.matcher(telefon).matches()) {
             etNrTelefon.setError(getString(R.string.err_nr_telefon_invalid));
+            isValidUser = false;
         }
     }
 }

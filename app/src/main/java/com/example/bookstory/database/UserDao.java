@@ -1,7 +1,9 @@
 package com.example.bookstory.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -21,7 +23,13 @@ public interface UserDao {
     @Query("select * from utilizatori where uid=:uid")
     Utilizator getUserByUid(String uid);
 
+    @Query("select * from utilizatori where id=:id")
+    Utilizator getUserById(int id);
+
     @Update
     void update(Utilizator u);
+
+    @Delete
+    void delete(Utilizator u);
 
 }

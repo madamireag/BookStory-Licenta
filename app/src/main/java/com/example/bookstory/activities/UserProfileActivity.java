@@ -51,12 +51,12 @@ public class UserProfileActivity extends AppCompatActivity {
             utilizator = db.getUserDao().getUserByUid(firebaseUser.getUid());
             if (firebaseUser.getPhotoUrl() != null) {
                 profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
-                etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
-                etChangeEmail.setText(firebaseUser.getEmail());
-                etChangePhone.setText(utilizator.getNrTelefon());
-                etChangeAdresa.setText(utilizator.getAdresa());
                 circleImageView.setImageURI(profilePic);
             }
+            etDisplayName.setText(utilizator.getNumeComplet());
+            etChangeEmail.setText(firebaseUser.getEmail());
+            etChangePhone.setText(utilizator.getNrTelefon());
+            etChangeAdresa.setText(utilizator.getAdresa());
         }
 
 
@@ -81,18 +81,19 @@ public class UserProfileActivity extends AppCompatActivity {
             if (!etChangeAdresa.getText().toString().isEmpty()) {
                 utilizator.setAdresa(etChangeAdresa.getText().toString());
             }
-            db.getUserDao().update(utilizator);
+
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                     .setDisplayName(etDisplayName.getText().toString())
                     .build();
             firebaseUser.updateProfile(profileChangeRequest)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            etDisplayName.setText(firebaseUser.getDisplayName());
                             utilizator.setNumeComplet(etDisplayName.getText().toString());
                         }
                     });
+
             Toast.makeText(getApplicationContext(), "Profile updated", Toast.LENGTH_LONG).show();
+            db.getUserDao().update(utilizator);
         });
 
         btnDeleteAccount.setOnClickListener(v -> {
@@ -132,6 +133,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void stergeContUtilizator() {
         firebaseUser.delete().addOnCompleteListener(task -> {
+            db.getUserDao().delete(utilizator);
             Toast.makeText(getApplicationContext(), "Cont sters!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);

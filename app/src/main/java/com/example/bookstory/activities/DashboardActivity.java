@@ -52,7 +52,9 @@ public class DashboardActivity extends AppCompatActivity {
         initializeUI();
         auth = FirebaseAuth.getInstance();
         dbInstance = LibraryDB.getInstanta(getApplicationContext());
+
         Utilizator utilizator = null;
+
         if (auth.getCurrentUser() != null) {
             utilizator = dbInstance.getUserDao().getUserByUid(auth.getCurrentUser().getUid());
         }
@@ -93,16 +95,13 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 13);
-        calendar.set(Calendar.SECOND, 0);
-//        String myFormat = "dd/MM/yy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-//        Date date = calendar.getTime();
-//        scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
+
         for (Imprumut i : imprumuturiScadente) {
             calendar.setTime(i.getDataScadenta());
             calendar.add(Calendar.DATE, -1);
+            calendar.set(Calendar.HOUR_OF_DAY, 12);
+            calendar.set(Calendar.MINUTE, 52);
+            calendar.set(Calendar.SECOND, 10);
             String myFormat = "dd/MM/yy";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
             Date date = calendar.getTime();

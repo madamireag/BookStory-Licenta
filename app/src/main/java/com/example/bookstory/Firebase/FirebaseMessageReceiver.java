@@ -88,6 +88,5 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        notificationManager.notify(0, builder.build());
     }
 }
