@@ -22,12 +22,12 @@ public interface ImprumutDao {
     @Query("SELECT * FROM imprumuturi where idImprumut=:id")
     Imprumut getImprumutById(long id);
 
-    @Query("delete from imprumuturi")
-    void deleteAll();
+    @Query("delete from imprumuturi where idUtilizator=:id")
+    void deleteAllForUser(long id);
 
 
-    @Query("delete from ImprumutCarte")
-    void deleteAllIC();
+    @Query("delete from ImprumutCarte where idImprumut=:id")
+    void deleteAllIC(long id);
 
     @Delete
     void delete(Imprumut i);

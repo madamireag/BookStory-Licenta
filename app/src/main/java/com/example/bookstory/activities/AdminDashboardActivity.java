@@ -71,7 +71,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             }
         });
         cvAddAuthor.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), VizualizareImprumuturiActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AddAuthorActivity.class);
             startActivity(intent);
         });
 

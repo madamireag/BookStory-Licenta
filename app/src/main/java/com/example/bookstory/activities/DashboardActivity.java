@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,15 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             }
         }
-        Imprumut im = dbInstance.getImprumutDao().getImprumutById(57);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.DATE, -14);
-        im.setDataImprumut(cal.getTime());
-        cal.setTime(new Date());
-        im.setDataScadenta(cal.getTime());
-        dbInstance.getImprumutDao().update(im);
-//        dbInstance.getImprumutDao().deleteAll();
+
         cvSignOut.setOnClickListener(v -> {
             if (auth.getCurrentUser() != null) {
                 auth.signOut();
@@ -118,7 +109,6 @@ public class DashboardActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
                 Date date = calendar.getTime();
                 scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
-                Log.i("TAG-DATA", date.toString());
             }
         }
     }

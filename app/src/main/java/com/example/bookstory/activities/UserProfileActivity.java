@@ -15,10 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookstory.R;
 import com.example.bookstory.database.LibraryDB;
+import com.example.bookstory.models.Imprumut;
 import com.example.bookstory.models.Utilizator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,6 +42,7 @@ public class UserProfileActivity extends AppCompatActivity {
     Utilizator utilizator;
     public Uri profilePic = Uri.EMPTY;
     LibraryDB db;
+    List<Imprumut> imprumutList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 etChangeAdresa.setEnabled(false);
                 etChangePhone.setEnabled(false);
             }
+            imprumutList = db.getImprumutDao().getAllImprumuturiForUser(utilizator.getId());
         }
 
 
@@ -144,6 +150,11 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void stergeContUtilizator() {
         firebaseUser.delete().addOnCompleteListener(task -> {
+            for (Imprumut i : imprumutList) {
+                db.getImprumutDao().deleteAllIC(i.getIdImprumut());
+            }
+            db.getImprumutDao().deleteAllForUser(utilizator.getId());
+
             db.getUserDao().delete(utilizator);
             Toast.makeText(getApplicationContext(), "Cont sters!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
