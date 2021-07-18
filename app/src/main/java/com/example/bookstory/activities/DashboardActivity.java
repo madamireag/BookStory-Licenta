@@ -62,11 +62,22 @@ public class DashboardActivity extends AppCompatActivity {
             imprumuturi = dbInstance.getImprumutDao().getAllImprumuturiForUser(utilizator.getId());
         }
         Date dataCurenta = new Date();
-        for (Imprumut i : imprumuturi) {
-            if (i.getDataScadenta().after(dataCurenta)) {
-                imprumuturiScadente.add(i);
+        if (!imprumuturi.isEmpty()) {
+            for (Imprumut i : imprumuturi) {
+                if (i.getDataScadenta().after(dataCurenta)) {
+                    imprumuturiScadente.add(i);
+                }
             }
         }
+        Imprumut im = dbInstance.getImprumutDao().getImprumutById(57);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -14);
+        im.setDataImprumut(cal.getTime());
+        cal.setTime(new Date());
+        im.setDataScadenta(cal.getTime());
+        dbInstance.getImprumutDao().update(im);
+//        dbInstance.getImprumutDao().deleteAll();
         cvSignOut.setOnClickListener(v -> {
             if (auth.getCurrentUser() != null) {
                 auth.signOut();
@@ -96,20 +107,20 @@ public class DashboardActivity extends AppCompatActivity {
         });
         Calendar calendar = Calendar.getInstance();
 
-        for (Imprumut i : imprumuturiScadente) {
-            calendar.setTime(i.getDataScadenta());
-            calendar.add(Calendar.DATE, -1);
-            calendar.set(Calendar.HOUR_OF_DAY, 12);
-            calendar.set(Calendar.MINUTE, 52);
-            calendar.set(Calendar.SECOND, 10);
-            String myFormat = "dd/MM/yy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-            Date date = calendar.getTime();
-            scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
-            Log.i("TAG-DATA", date.toString());
+        if (!imprumuturiScadente.isEmpty()) {
+            for (Imprumut i : imprumuturiScadente) {
+                calendar.setTime(i.getDataScadenta());
+                calendar.add(Calendar.DATE, -1);
+                calendar.set(Calendar.HOUR_OF_DAY, 12);
+                calendar.set(Calendar.MINUTE, 52);
+                calendar.set(Calendar.SECOND, 10);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                Date date = calendar.getTime();
+                scheduleNotification(getNotification(sdf.format(date)), calendar.getTimeInMillis());
+                Log.i("TAG-DATA", date.toString());
+            }
         }
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

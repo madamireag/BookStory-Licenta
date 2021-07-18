@@ -43,6 +43,7 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
     LibraryDB dbInstance;
     FirebaseAuth auth;
     Utilizator utilizator = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +76,20 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
                     Imprumut imprumut = imprumuturi.get(position);
                     TextView tvCartiImprumut = view.findViewById(R.id.tvCartiImprumut);
                     TextView tvData = view.findViewById(R.id.tvDataScadenta);
+                    TextView tvNume = view.findViewById(R.id.tvTitularImprumut);
                     stringBuilder = new StringBuilder();
                     for (Carte c : imprumutCuCarteList.get(position).listaCartiImprumut) {
                         stringBuilder.append(c.getTitlu());
                         if (imprumutCuCarteList.get(position).listaCartiImprumut.indexOf(c) != (imprumutCuCarteList.get(position).listaCartiImprumut.size() - 1)) {
                             stringBuilder.append(System.lineSeparator());
                         }
+                    }
+
+
+                    if (utilizator == null) {
+                        Utilizator u;
+                        u = dbInstance.getUserDao().getUserById((int) imprumuturi.get(position).getIdUtilizator());
+                        tvNume.setText(u.getNumeComplet());
                     }
                     tvCartiImprumut.setText(stringBuilder.toString());
                     Date dataCurenta = new Date();
@@ -117,10 +126,9 @@ public class VizualizareImprumuturiActivity extends AppCompatActivity {
             final EditText etTaxa = view.findViewById(R.id.etTaxa);
 
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialog, which) -> {
-                if(utilizator != null) {
+                if (utilizator != null) {
                     Toast.makeText(getApplicationContext(), "Nu aveti permisiunea sa introduceti o taxa!", Toast.LENGTH_LONG).show();
-                } else
-                {
+                } else {
                     adapter.getItem(info.position).setTaxaIntarziere(Double.parseDouble(etTaxa.getText().toString()));
                     dbInstance.getImprumutDao().update(adapter.getItem(info.position));
                 }

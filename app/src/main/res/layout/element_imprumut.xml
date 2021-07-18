@@ -6,6 +6,13 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tvTitularImprumut"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/adamina"
+        android:textColor="@color/black" />
+
+    <TextView
         android:id="@+id/tvDataImprumut"
         android:layout_width="260dp"
         android:layout_height="wrap_content"

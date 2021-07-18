@@ -53,32 +53,41 @@ public class UserProfileActivity extends AppCompatActivity {
                 profilePic = Uri.parse(firebaseUser.getPhotoUrl().toString());
                 circleImageView.setImageURI(profilePic);
             }
-            etDisplayName.setText(utilizator.getNumeComplet());
-            etChangeEmail.setText(firebaseUser.getEmail());
-            etChangePhone.setText(utilizator.getNrTelefon());
-            etChangeAdresa.setText(utilizator.getAdresa());
+            if (utilizator != null) {
+                etChangeAdresa.setEnabled(true);
+                etChangePhone.setEnabled(true);
+                etDisplayName.setText(utilizator.getNumeComplet());
+                etChangeEmail.setText(firebaseUser.getEmail());
+                etChangePhone.setText(utilizator.getNrTelefon());
+                etChangeAdresa.setText(utilizator.getAdresa());
+            } else {
+                etDisplayName.setText(firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "");
+                etChangeEmail.setText(firebaseUser.getEmail());
+                etChangeAdresa.setEnabled(false);
+                etChangePhone.setEnabled(false);
+            }
         }
 
 
         btnSaveChanges.setOnClickListener(v -> {
             if (!etChangeEmail.getText().toString().isEmpty()) {
                 firebaseUser.updateEmail(etChangeEmail.getText().toString()).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && utilizator != null) {
                         utilizator.setEmail(etChangeEmail.getText().toString());
                     }
                 });
             }
             if (!etChangePassword.getText().toString().isEmpty()) {
                 firebaseUser.updatePassword(etChangePassword.getText().toString()).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && utilizator != null) {
                         utilizator.setPassword(etChangePassword.getText().toString());
                     }
                 });
             }
-            if (!etChangePhone.getText().toString().isEmpty()) {
+            if (!etChangePhone.getText().toString().isEmpty() && utilizator != null) {
                 utilizator.setNrTelefon(etChangePhone.getText().toString());
             }
-            if (!etChangeAdresa.getText().toString().isEmpty()) {
+            if (!etChangeAdresa.getText().toString().isEmpty() && utilizator != null) {
                 utilizator.setAdresa(etChangeAdresa.getText().toString());
             }
 
@@ -87,13 +96,15 @@ public class UserProfileActivity extends AppCompatActivity {
                     .build();
             firebaseUser.updateProfile(profileChangeRequest)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && utilizator != null) {
                             utilizator.setNumeComplet(etDisplayName.getText().toString());
                         }
                     });
 
             Toast.makeText(getApplicationContext(), "Profile updated", Toast.LENGTH_LONG).show();
-            db.getUserDao().update(utilizator);
+            if (utilizator != null) {
+                db.getUserDao().update(utilizator);
+            }
         });
 
         btnDeleteAccount.setOnClickListener(v -> {
