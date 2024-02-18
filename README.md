@@ -1,5 +1,6 @@
 The app allows the user to:
 * Log in /create an account
+
   ![Default page](default.png) ![Login](login.png) ![Register](register.png)
 * View / Change his own profile data
   ![User profile](user-profile.png)
