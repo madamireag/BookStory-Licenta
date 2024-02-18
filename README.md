@@ -4,7 +4,7 @@ The app allows the user to:
 ![Default page](default.png) ![Login](login.png) ![Register](register.png)
 * View a menu of options he has in the app
   
-![User menu](user-menu.png)
+![User menu](menu-user.png)
   
 * View a list of available books to borrow, search for a specific book, and mark books for borrowing
 ![Books list](books-list.png)
