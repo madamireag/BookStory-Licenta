@@ -22,8 +22,11 @@
   ![Reccomendations](recs-list.png)
 ## The administrator has the following possibilities
 * See a menu of the available options he has
+
 ![Admin menu](admin-menu.png)
 * Add a book and associate existing authors
+ 
 ![Add book](add-book.png)  ![Associate authors](add-authors-book.png)
+
 * Add an author to the database
 * Delete books/authors from the database
