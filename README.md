@@ -12,8 +12,7 @@ The app allows the user to:
 * View / Change his own profile data
 ![User profile](user-profile.png)
 
-  
-* 
 * See the history of the book lends he made
+  ![Lendings](lendings.png)
 * See a list of reccomended books based on his previous lendings
   ![Reccomendations](recs-list.png)
