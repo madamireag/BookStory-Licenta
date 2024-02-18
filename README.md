@@ -20,7 +20,7 @@
 * See a list of reccomended books based on his previous lendings
 
   ![Reccomendations](recs-list.png)
-### The administrator has the following possibilities
+### The administrator has the following specific possibilities
 * See a menu of the available options he has
 
 ![Admin menu](admin-menu.png)
