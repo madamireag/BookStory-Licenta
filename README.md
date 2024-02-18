@@ -1,15 +1,19 @@
 The app allows the user to:
 * Log in /create an account
 
-  ![Default page](default.png) ![Login](login.png) ![Register](register.png)
+![Default page](default.png) ![Login](login.png) ![Register](register.png)
+* View a menu of options he has in the app
   
-* View a list of available books to borrow and search for a specific book
+![User menu](user-menu.png)
+  
+* View a list of available books to borrow, search for a specific book, and mark books for borrowing
 ![Books list](books-list.png)
+
 * View / Change his own profile data
 ![User profile](user-profile.png)
 
   
-* Mark books for borrowing
+* 
 * See the history of the book lends he made
 * See a list of reccomended books based on his previous lendings
   ![Reccomendations](recs-list.png)
